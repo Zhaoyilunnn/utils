@@ -1,12 +1,24 @@
 #!/bin/bash
 
 stage=0
+mode=0 # 0 for direct communication, 1 for proxychains4
+cmd=""
 
 # Usage
 # stage = 0: commit and push, 1: push, 2: pull
 
+
+if [ $# -eq 2 ]; then
+    stage=$1;
+    mode=$2;
+fi
+
 if [ $# -eq 1 ]; then
     stage=$1
+fi
+
+if [ $mode -eq 1 ]; then 
+    cmd="proxychains4 "
 fi
 
 ls -l ./ | awk '{if(NF>3)print $NF}' | grep -v "check_notes" | 
@@ -15,7 +27,7 @@ ls -l ./ | awk '{if(NF>3)print $NF}' | grep -v "check_notes" |
 
         # If stage == 2, sync notes and continue 
         if [ ${stage} -eq 2 ]; then
-            proxychains4 git pull;
+            ${cmd}git pull;
             cd -;
             continue;
         fi
@@ -26,9 +38,9 @@ ls -l ./ | awk '{if(NF>3)print $NF}' | grep -v "check_notes" |
             echo "$line Nothing changed";
         else
             if [ ${stage} -eq 0 ]; then
-                git commit -am "Update" && proxychains4 git push; 
+                git commit -am "Update" && ${cmd}git push; 
             elif [ ${stage} -eq 1 ]; then
-                proxychains4 git push;
+                ${cmd}git push;
             fi
         fi
         cd -;
