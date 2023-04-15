@@ -26,29 +26,23 @@ function search_specific() {
     local conf_dir=$3
     local conf_key=$4
     local key=$5
+    local conf_name=$(echo "${conf_dir}" | tr '[:lower:]' '[:upper:]')
 
-    echo "Search ${key} in conference ${conf_dir}, "\
-        "from year ${year_start} to year ${year_end} ..."
+    echo "Search ${key} in conference ${conf_dir}, from year ${year_start} to year ${year_end} ..."
 
     for y in $(seq ${year_start} ${year_end}); do
         local link="${dblp_src}${conf_dir}/${conf_key}${y}.html"
         curl ${link} 1>html.${conf_dir}.${y} 2>/dev/null
-        python3 html_parser.py html.${conf_dir}.${y} | grep -i ${key} | grep "^Data"
+        python3 html_parser.py html.${conf_dir}.${y} |
+            grep -i ${key} | grep "^Data" |
+            awk -F': ' '{print "- "$NF" '"${conf_name}"'-'"${y}"'"}'
     done
     rm -rf html.${conf_dir}.*
 }
 
 if [ $# -eq 3 ]; then
     year_args=$(echo $1 | awk -F'-' '{if(NF==2){print $1,$2} else {print $1,$1}}')
-    #year=()
-    #for k in $year_args; do
-    #    year+=($k)
-    #done
     conf_args=$(echo $2 | awk -F'-' '{if(NF==2){print $1,$2} else {print $1,$1}}')
-    #conf=()
-    #for k in $conf_args; do
-    #    conf+=($k)
-    #done
     key=$3
     search_specific $year_args $conf_args $key
 elif [ $# -eq 2 ]; then
