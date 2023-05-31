@@ -68,10 +68,12 @@ elif [ $# -eq 2 ]; then
     key=$2
     search_all
 else
-    echo "Usage: $0 <year> <key> ::Search all conferences in specific year"
-    echo "       $0 <year> <conf> <key> ::Search specific conference in specific year"
-    echo "                                 ::Support single year and <start-end> format"
+    echo -e "Usage: $0 <year> <key> : Search all conferences in specific year"
+    echo -e "       $0 <year-args> <conf-args> <key> : Search specific conference in specific year"
+    echo -e "                                          Support single year and <start-end> format"
+    echo -e "\nyear_args: <start>-<end> or <single-year> or <start-end-suffix>"
+    echo -e "conf_args: <conference-name> or <conference-directory>-<conference-key>"
+    echo -e "\nExample:"
+    echo -e "  bash find_papers 2023-2024-1 asplos quantum"
     exit 1
 fi
-
-
