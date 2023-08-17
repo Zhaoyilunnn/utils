@@ -15,6 +15,7 @@ Plugin 'natebosch/vim-lsc'
 Plugin 'liuchengxu/space-vim-dark'
 Plugin 'joshdick/onedark.vim'
 Plugin 'neoclide/coc.nvim', {'branch': 'release'}
+Plugin 'antoyo/vim-licenses'
 " Plugin 'vim-scripts/pylint.vim'
 
 " All of your Plugins must be added before the following line
@@ -38,6 +39,12 @@ autocmd BufWritePre * :%s#\($\n\s*\)\+\%$##e
 
 " colorscheme space-vim-dark
 " hi Comment cterm=italic
+
+"""""""""""""""""" License
+
+command! Quafu call InsertLicense('quafu')
+
+"""""""""""""""""" License
 
 let g:coc_disable_startup_warning = 1
 colorscheme onedark
