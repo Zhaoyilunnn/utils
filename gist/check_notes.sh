@@ -21,7 +21,6 @@ if [ $mode -eq 1 ]; then
     cmd=proxychains4
 fi
 
-# ls -l ./ | awk '{if(NF>3)print $NF}' | grep -v "check_notes" |
 find "." -type d -name ".git" -exec dirname {} \; |
     while read line; do
         cd $line;
