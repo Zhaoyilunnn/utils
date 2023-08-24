@@ -24,7 +24,7 @@ fi
 # ls -l ./ | awk '{if(NF>3)print $NF}' | grep -v "check_notes" |
 find "." -type d -name ".git" -exec dirname {} \; |
     while read line; do
-        cd $line/*;
+        cd $line;
 
         # If stage == 2, sync notes and continue
         if [ ${stage} -eq 2 ]; then
