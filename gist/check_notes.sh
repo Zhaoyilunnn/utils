@@ -17,15 +17,16 @@ if [ $# -eq 1 ]; then
     stage=$1
 fi
 
-if [ $mode -eq 1 ]; then 
+if [ $mode -eq 1 ]; then
     cmd=proxychains4
 fi
 
-ls -l ./ | awk '{if(NF>3)print $NF}' | grep -v "check_notes" | 
-    while read line; do 
+# ls -l ./ | awk '{if(NF>3)print $NF}' | grep -v "check_notes" |
+find "." -type d -name ".git" -exec dirname {} \; |
+    while read line; do
         cd $line/*;
 
-        # If stage == 2, sync notes and continue 
+        # If stage == 2, sync notes and continue
         if [ ${stage} -eq 2 ]; then
             ${cmd} git pull;
             cd -;
@@ -38,7 +39,7 @@ ls -l ./ | awk '{if(NF>3)print $NF}' | grep -v "check_notes" |
             echo "$line Nothing changed";
         else
             if [ ${stage} -eq 0 ]; then
-                git commit -am "Update" && ${cmd} git push; 
+                git commit -am "Update" && ${cmd} git push;
             elif [ ${stage} -eq 1 ]; then
                 ${cmd} git push;
             fi
