@@ -45,7 +45,7 @@ function search_specific() {
         curl ${link} 1>html.${conf_dir}.${y} 2>/dev/null
         python3 html_parser.py html.${conf_dir}.${y} |
             grep -i ${key} | grep "^Data" |
-            awk -F': ' '{print "- "$NF" '"${conf_name}"'-'"${y}"'"}'
+            awk '{ gsub(/[^:]*:/, "", $0); print "-"$0" '"${conf_name}"'-'"${y}"'"}'
     done
     rm -rf html.${conf_dir}.*
 }
