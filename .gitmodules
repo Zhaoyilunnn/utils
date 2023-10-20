@@ -1,0 +1,3 @@
+[submodule "figure/PyMuPDF-Utilities"]
+	path = figure/PyMuPDF-Utilities
+	url = https://github.com/pymupdf/PyMuPDF-Utilities.git
