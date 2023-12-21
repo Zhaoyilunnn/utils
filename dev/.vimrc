@@ -23,8 +23,24 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 " autocmd FileType python compiler pylint
+
+
+"""" pydocstring etting
+" let g:pydocstring_formatter = 'google'
+" let g:pydocstring_doq_path = '/root/anaconda3/bin/doq'
+nmap <silent> ga <Plug>(coc-codeaction-line)
+xmap <silent> ga <Plug>(coc-codeaction-selected)
+nmap <silent> gA <Plug>(coc-codeaction)
+"""" pydocstring etting
+
+
+
+"""" Remove blanks
 autocmd BufWritePre * :%s/\s\+$//e
 autocmd BufWritePre * :%s#\($\n\s*\)\+\%$##e
+"""" Remove blanks
+
+
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
 "
@@ -54,6 +70,7 @@ syntax on
 set expandtab
 set tabstop=4
 set shiftwidth=4
+autocmd FileType c,cc,cpp setlocal tabstop=2 shiftwidth=2
 set hlsearch
 set incsearch
 let &termencoding=&encoding
