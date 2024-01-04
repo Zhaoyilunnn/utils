@@ -22,7 +22,7 @@ class MyHTMLParser(HTMLParser):
         print("Named ent:", c)
 
     def handle_charref(self, name):
-        if name.startswith('x'):
+        if name.startswith("x"):
             c = chr(int(name[1:], 16))
         else:
             c = chr(int(name))
@@ -35,12 +35,12 @@ class MyHTMLParser(HTMLParser):
 def _main():
     parser = MyHTMLParser()
     html_file = sys.argv[1]
-    html_file_gen = open(html_file, 'r')
+    html_file_gen = open(html_file, "r")
     parser.feed(html_file_gen.read())
     # print(html_file_gen.read())
 
     html_file_gen.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     _main()
