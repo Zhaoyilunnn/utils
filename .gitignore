@@ -1,3 +1,4 @@
 *.pdf
 *temp*
 *.tar.gz
+*.json

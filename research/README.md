@@ -1,5 +1,7 @@
 # Search papers in DBLP
 
+See help information through
+
 ```
-./find_papers.sh <year> <conference> <search-key>
+bash find_papers.sh
 ```
