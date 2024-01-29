@@ -2,25 +2,33 @@ set encoding=utf-8
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+"""""""""""""""" Plugin Management
+call plug#begin()
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'natebosch/vim-lsc'
-Plugin 'liuchengxu/space-vim-dark'
-Plugin 'joshdick/onedark.vim'
-Plugin 'neoclide/coc.nvim', {'branch': 'release'}
-Plugin 'antoyo/vim-licenses'
-" Plugin 'vim-scripts/pylint.vim'
+" Make sure you use single quotes
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+Plug 'VundleVim/Vundle.vim'
+Plug 'davidhalter/jedi-vim'
+Plug 'natebosch/vim-lsc'
+Plug 'liuchengxu/space-vim-dark'
+Plug 'joshdick/onedark.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'npm ci'}
+Plug 'antoyo/vim-licenses'
+
+" Initialize plugin system
+" - Automatically executes `filetype plugin indent on` and `syntax enable`.
+call plug#end()
+" You can revert the settings after the call like so:
+"   filetype indent off   " Disable file-type-specific indentation
+"   syntax off            " Disable syntax highlighting
+"""""""""""""""" Plugin Management
 
 " autocmd FileType python compiler pylint
 
