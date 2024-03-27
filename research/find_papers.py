@@ -4,6 +4,7 @@ import os
 import json
 import threading
 from concurrent.futures import ThreadPoolExecutor,wait,ALL_COMPLETED,FIRST_COMPLETED, as_completed
+import re
 
 dblp_src="https://dblp.org/db/conf/"
 conference_list="dac date isca micro aspdac iccad hpca asplos".split(' ')
@@ -18,7 +19,7 @@ def echoHelp():
         "\t<conf_args>: <conference-name> or <conference-directory>-<conference-key>\n"\
         "\t<key_args> : key1,key2,...,keyN\n"\
         "\nExample:\n"\
-        "\tbash find_papers 2023-2024-1 asplos quantum"
+        "\tbash find_papers 2023-2024 asplos quantum"
     )
 
 def parserKey(argvStr):
@@ -72,46 +73,69 @@ def testKey(srcStr,keyList):
             return False
     return True
 
-def parserJson(jsonStr,keyList):
-    data = json.loads(jsonStr)
-    #print(data)
-    #print(len(data['result']["hits"]["hit"]))
-    try:
-        #print(data['result']["hits"]["@total"])
-        if int(data['result']["hits"]["@total"]) > 0:
-            for item in data['result']["hits"]["hit"]:
-                title = item["info"]["title"];
-                #doi = item["info"]["doi"]
-                doi = item["info"]["ee"]
-                if testKey(title,keyList):
-                    print(title,doi)
-    except Exception as e:
-        print("解析数据时发生异常",e)
-
 def getFile(url,cacheFile):
+    cacheDir = '.cache'
+    cacheFile = "%s/%s" % (cacheDir,cacheFile)
+    os.makedirs(cacheDir,exist_ok=True)
     if os.path.exists(cacheFile):
         with open(cacheFile, 'r') as file:
             content = file.read();
         file.close()
         return content
     else:
-        response = requests.get(url)
-        if response.status_code == 200:
-            # 将响应内容保存到文件
-            with open(cacheFile, 'wb') as f:
-                f.write(response.content)
-            print('响应已保存到 '+cacheFile+' 文件中')
-            return response.content
-        else:
-            print('请求失败：', response.status_code, url)
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                # 将响应内容保存到文件
+                with open(cacheFile, 'wb') as f:
+                    f.write(response.content)
+                print('响应已保存到 '+cacheFile+' 文件中')
+                return response.content
+            else:
+                print('请求失败：', response.status_code, url)
+        except Exception as e:
+            print("解析数据时发生异常",e)
     return None
+
+def getAbstract(doi):
+    if doi is None:
+        print("doi缺失\n")
+    #url = 'https://api.crossref.org/works/%s' % (doi)
+    url = 'https://api.semanticscholar.org/graph/v1/paper/%s?fields=abstract' % (doi)
+    doiFileName =re.sub(r'[\\/*?:"<>|]', '', doi)
+    content = getFile(url,doiFileName)
+    if content is None:
+        print("获取摘要信息出错,下次再试",url,"\n")
+        return
+
+    data = json.loads(content)
+    abstract = data.get('abstract')
+    if abstract is not None:
+        print("abstract:",abstract,"\n")
+    else:
+        print("获取摘要信息出错",url,"\n")
+
+def parserJson(jsonStr,keyList):
+    data = json.loads(jsonStr)
+    #print(data)
+    #print(len(data['result']["hits"]["hit"]))
+    #try:
+    #print(data['result']["hits"]["@total"])
+    if int(data['result']["hits"]["@total"]) > 0:
+        for item in data['result']["hits"]["hit"]:
+            title = item["info"]["title"];
+            doi = item["info"].get("doi")
+            doiUrl = item["info"].get("ee")
+            if testKey(title,keyList):
+                print(title,doiUrl)
+                getAbstract(doi)
+    #except Exception as e:
+    #    print("解析数据时发生异常",e)
 
 
 
 def search(yearList,confList,keyList):
     #print(len(confList))
-    cacheDir = '.cache'
-    os.makedirs(cacheDir,exist_ok=True)
     urlList = []
     fileNameList = []
     for yearMonths in yearList:
@@ -120,7 +144,7 @@ def search(yearList,confList,keyList):
                 #url = "%s%s/%s%d-%d.html" % (dblp_src,conf,conf,yearMonths[0],m)
                 url = "%s%s/%s%d.html" % (dblp_src,conf,conf,yearMonths[0])
                 url = "https://dblp.org/search/publ/api?q=toc:db/conf/%s/%s%d.bht:&h=1000&format=json" % (conf,conf,yearMonths[0])
-                fileName = "%s/%s_%d.json" % (cacheDir,conf,yearMonths[0])
+                fileName = "%s_%d.json" % (conf,yearMonths[0])
                 #print(conf,url,fileName)
                 urlList.append(url)
                 fileNameList.append(fileName)
