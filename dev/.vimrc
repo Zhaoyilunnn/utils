@@ -21,6 +21,7 @@ Plug 'liuchengxu/space-vim-dark'
 Plug 'joshdick/onedark.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'npm ci'}
 Plug 'antoyo/vim-licenses'
+Plug 'wakatime/vim-wakatime'
 
 " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
