@@ -1,8 +1,9 @@
 set encoding=utf-8
 set nocompatible              " be iMproved, required
 filetype off                  " required
+set backspace=indent,eol,start
 
-"""""""""""""""" Plugin Management
+"------------------- Plugin Management
 call plug#begin()
 " The default plugin directory will be as follows:
 "   - Vim (Linux/macOS): '~/.vim/plugged'
@@ -14,11 +15,12 @@ call plug#begin()
 
 " Make sure you use single quotes
 
-Plug 'VundleVim/Vundle.vim'
-Plug 'davidhalter/jedi-vim'
-Plug 'natebosch/vim-lsc'
+" Color schemes
+Plug 'rafi/awesome-vim-colorschemes'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'joshdick/onedark.vim'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+
 Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'npm ci'}
 Plug 'antoyo/vim-licenses'
 Plug 'wakatime/vim-wakatime'
@@ -29,50 +31,37 @@ call plug#end()
 " You can revert the settings after the call like so:
 "   filetype indent off   " Disable file-type-specific indentation
 "   syntax off            " Disable syntax highlighting
-"""""""""""""""" Plugin Management
+"------------------- Plugin Management
 
 " autocmd FileType python compiler pylint
 
 
-"""" pydocstring etting
+"----------------- pydocstring setting
 " let g:pydocstring_formatter = 'google'
 " let g:pydocstring_doq_path = '/root/anaconda3/bin/doq'
 nmap <silent> ga <Plug>(coc-codeaction-line)
 xmap <silent> ga <Plug>(coc-codeaction-selected)
 nmap <silent> gA <Plug>(coc-codeaction)
-"""" pydocstring etting
+"----------------- pydocstring setting
 
 
 
-"""" Remove blanks
+"----------------- Remove blanks
 autocmd BufWritePre * :%s/\s\+$//e
 autocmd BufWritePre * :%s#\($\n\s*\)\+\%$##e
-"""" Remove blanks
+"----------------- Remove blanks
 
 
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
-" colorscheme space-vim-dark
-" hi Comment cterm=italic
-
-"""""""""""""""""" License
-
+"----------------- License
 command! Quafu call InsertLicense('quafu')
+"----------------- License
 
-"""""""""""""""""" License
-
-let g:coc_disable_startup_warning = 1
-colorscheme onedark
+"----------------- color scheme
+"colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+"colorscheme catppuccin-mocha " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+"colorscheme catppuccin-latte " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+colorscheme onehalflight
+"----------------- color scheme
 
 " color desert
 syntax on
@@ -84,43 +73,17 @@ set hlsearch
 set incsearch
 let &termencoding=&encoding
 set fileencodings=utf-8,gbk
+
+" Go to where you leave last time
 if has("autocmd")
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
-" let g:lsc_server_commands = {
-" 	\ 'python': '/root/anaconda3/envs/qcs/bin/pylsp',
-" 	\ 'cpp': '/usr/bin/ccls',
-" 	\ 'cmake': '/root/anaconda3/bin/cmake-language-server',
-"     \ }
 
-" let g:lsc_server_commands = {'cpp': '/usr/bin/ccls'}
-" Use all the defaults (recommended):
-let g:lsc_auto_map = v:true
+" ------------------------------ Setting for coc-nvim ---------------
 
-" Apply the defaults with a few overrides:
-let g:lsc_auto_map = {'defaults': v:true, 'FindReferences': '<leader>r'}
-
-" Setting a value to a blank string leaves that command unmapped:
-let g:lsc_auto_map = {'defaults': v:true, 'FindImplementations': ''}
-
-" ... or set only the commands you want mapped without defaults.
-" Complete default mappings are:
-let g:lsc_auto_map = {
-    \ 'GoToDefinition': '<C-]>',
-    \ 'GoToDefinitionSplit': ['<C-W>]', '<C-W><C-]>'],
-    \ 'FindReferences': 'gr',
-    \ 'NextReference': '<C-n>',
-    \ 'PreviousReference': '<C-p>',
-    \ 'FindImplementations': 'gI',
-    \ 'FindCodeActions': 'ga',
-    \ 'Rename': 'gR',
-    \ 'ShowHover': v:true,
-    \ 'DocumentSymbol': 'go',
-    \ 'WorkspaceSymbol': 'gS',
-    \ 'SignatureHelp': 'gm',
-    \ 'Completion': 'completefunc',
-    \}
+" disable startup warning
+let g:coc_disable_startup_warning = 1
 
 " Some servers have issues with backup files, see #649.
 set nobackup
@@ -274,3 +237,5 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
+" ------------------------------ Setting for coc-nvim ---------------
