@@ -16,9 +16,11 @@ call plug#begin()
 " Make sure you use single quotes
 
 " Color schemes
-Plug 'rafi/awesome-vim-colorschemes'
-Plug 'liuchengxu/space-vim-dark'
-Plug 'joshdick/onedark.vim'
+"Plug 'rafi/awesome-vim-colorschemes'
+Plug 'sainnhe/everforest'
+"Plug 'rakr/vim-two-firewatch'
+"Plug 'liuchengxu/space-vim-dark'
+"Plug 'joshdick/onedark.vim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
 Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'npm ci'}
@@ -60,7 +62,33 @@ command! Quafu call InsertLicense('quafu')
 "colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 "colorscheme catppuccin-mocha " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 "colorscheme catppuccin-latte " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
-colorscheme onehalflight
+"colorscheme onehalflight
+"colorscheme two-firewatch
+"colorscheme onedark
+"set background=light " or light if you prefer the light version
+"let g:two_firewatch_italics=1
+"colo two-firewatch
+
+" Important!!
+if has('termguicolors')
+  set termguicolors
+endif
+
+" For dark version.
+"set background=dark
+
+" For light version.
+set background=light
+
+" Set contrast.
+" This configuration option should be placed before `colorscheme everforest`.
+" Available values: 'hard', 'medium'(default), 'soft'
+let g:everforest_background = 'hard'
+
+" For better performance
+let g:everforest_better_performance = 1
+
+colorscheme everforest
 "----------------- color scheme
 
 " color desert
