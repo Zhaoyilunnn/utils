@@ -42,3 +42,9 @@ make reconfig -j <num-jobs>
 # Clean
 # make distclean
 ```
+
+# Dockerfile
+
+```bash
+docker build . --build-arg ip=<ip> --network host
+```
