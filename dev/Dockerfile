@@ -1,16 +1,13 @@
-ARG ip=0.0.0.0
-ARG port=10810
 ARG base_image=ubuntu:24.04
 
 # Base image
 FROM ${base_image}
 
+ARG ip=0.0.0.0
+ARG port=10810
 # Setup proxy
-RUN export https_proxy=socks5://${ip}:${port} \
-    http_proxy=sockst://${ip}:${port} \
-    IP=${ip} PORT=${port}
-RUN echo "set_proxy=\"export https_proxy=socks5://${IP}:${PORT} && export http_proxy=sockst://${IP}:${PORT}\"" >> /root/.bashrc
-RUN echo "unset_proxy=\"unset http_proxy https_proxy\"" >> /root/.bashrc
+RUN echo "alias set_proxy=\"export https_proxy=socks5://${ip}:${port} && export http_proxy=socks5://${ip}:${port}\"" >> /root/.bashrc
+RUN echo "alias unset_proxy=\"unset http_proxy https_proxy\"" >> /root/.bashrc
 
 # Install vim, git, curl
 RUN apt-get update && \
