@@ -1,5 +1,6 @@
 {
 "coc.preferences.jumpCommand": "tab drop",
 "python.linting.pylintEnabled": true,
-"pydocstring.formatter": "google"
+"pydocstring.formatter": "google",
+"pyright.inlayHints.parameterTypes": false
 }
