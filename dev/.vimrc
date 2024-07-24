@@ -2,6 +2,7 @@ set encoding=utf-8
 set nocompatible              " be iMproved, required
 filetype off                  " required
 set backspace=indent,eol,start
+set nu
 
 "------------------- Plugin Management
 call plug#begin()
@@ -58,42 +59,40 @@ autocmd BufWritePre * :%s#\($\n\s*\)\+\%$##e
 command! Quafu call InsertLicense('quafu')
 "----------------- License
 
-"The color scheme setting depends on plugins, delay setting it after
-"pluginstall
-"======================="----------------- color scheme
-"======================="colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
-"======================="colorscheme catppuccin-mocha " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
-"======================="colorscheme catppuccin-latte " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
-"======================="colorscheme onehalflight
-"======================="colorscheme two-firewatch
-"======================="colorscheme onedark
-"======================="set background=light " or light if you prefer the light version
-"======================="let g:two_firewatch_italics=1
-"======================="colo two-firewatch
-"=======================
-"=======================" Important!!
-"=======================if has('termguicolors')
-"=======================  set termguicolors
-"=======================endif
-"=======================
-"=======================" For dark version.
-"======================="set background=dark
-"=======================
-"=======================" For light version.
-"=======================set background=light
-"=======================
-"=======================" Set contrast.
-"=======================" This configuration option should be placed before `colorscheme everforest`.
-"=======================" Available values: 'hard', 'medium'(default), 'soft'
-"=======================let g:everforest_background = 'hard'
-"=======================
-"=======================" For better performance
-"=======================let g:everforest_better_performance = 1
-"=======================
-"=======================colorscheme everforest
-"======================="----------------- color scheme
+"----------------- color scheme
+"colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+"colorscheme catppuccin-mocha " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+"colorscheme catppuccin-latte " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
+"colorscheme onehalflight
+"colorscheme two-firewatch
+"colorscheme onedark
+"set background=light " or light if you prefer the light version
+"let g:two_firewatch_italics=1
+"colo two-firewatch
 
-" color desert
+"" Important!!
+"if has('termguicolors')
+"  set termguicolors
+"endif
+"
+"" For dark version.
+""set background=dark
+"
+"" For light version.
+"set background=light
+"
+"" Set contrast.
+"" This configuration option should be placed before `colorscheme everforest`.
+"" Available values: 'hard', 'medium'(default), 'soft'
+"let g:everforest_background = 'hard'
+"
+"" For better performance
+"let g:everforest_better_performance = 1
+"
+"colorscheme everforest
+"----------------- color scheme
+
+" color darkblue
 syntax on
 set expandtab
 set tabstop=4
