@@ -19,6 +19,7 @@ call plug#begin()
 " Color schemes
 "Plug 'rafi/awesome-vim-colorschemes'
 Plug 'sainnhe/everforest'
+Plug 'morhetz/gruvbox'
 "Plug 'rakr/vim-two-firewatch'
 "Plug 'liuchengxu/space-vim-dark'
 "Plug 'joshdick/onedark.vim'
@@ -90,6 +91,11 @@ command! Quafu call InsertLicense('quafu')
 "let g:everforest_better_performance = 1
 "
 "colorscheme everforest
+
+set background=dark
+let g:gruvbox_italic=1
+let g:gruvbox_contrast_dark='hard'
+colorscheme gruvbox
 "----------------- color scheme
 
 " color darkblue
