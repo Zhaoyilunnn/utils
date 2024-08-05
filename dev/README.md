@@ -8,6 +8,11 @@ For example, the [`catppuccin`](https://github.com/catppuccin/nvim) plugin only 
 
 My older config for vim==8.2 can be found in `tags/v0.1.0`
 
+## Latex
+
+- [How I'm able to take notes in mathematics lectures using LaTeX and Vim](https://castel.dev/post/lecture-notes-1/)
+- [latex-snippets](https://github.com/gillescastel/latex-snippets)
+
 
 ## Build Vim From Source
 
