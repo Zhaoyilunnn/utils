@@ -16,7 +16,7 @@ call plug#begin()
 
 " Make sure you use single quotes
 
-" Color schemes
+"---------------------------- Color schemes -------------------------
 "Plug 'rafi/awesome-vim-colorschemes'
 Plug 'sainnhe/everforest'
 Plug 'morhetz/gruvbox'
@@ -25,9 +25,25 @@ Plug 'morhetz/gruvbox'
 "Plug 'joshdick/onedark.vim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
-Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'npm ci'}
+
+
+"---------------------------- Misc -------------------------
 Plug 'antoyo/vim-licenses'
 Plug 'wakatime/vim-wakatime'
+
+
+
+"---------------------------- coc-nvim -------------------------
+"coc-clangd: c/c++
+"coc-cmake: cmake
+"coc-explorer: explorer
+"coc-json: json
+"coc-prettier: markdown format
+"coc-pyright: python
+"coc-rust-analyzer: rust
+Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'npm ci'}
+
+"---------------------------- latex -------------------------
 Plug 'sirver/ultisnips'
     let g:UltiSnipsExpandTrigger = '<tab>'
     let g:UltiSnipsJumpForwardTrigger = '<tab>'
