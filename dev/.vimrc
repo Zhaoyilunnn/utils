@@ -138,6 +138,7 @@ set expandtab
 set tabstop=4
 set shiftwidth=4
 autocmd FileType c,cc,cpp setlocal tabstop=2 shiftwidth=2
+autocmd FileType markdown setlocal tabstop=2 shiftwidth=2 softtabstop=0
 set hlsearch
 set incsearch
 let &termencoding=&encoding
