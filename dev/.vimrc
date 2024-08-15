@@ -30,7 +30,7 @@ Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 "---------------------------- Misc -------------------------
 Plug 'antoyo/vim-licenses'
 Plug 'wakatime/vim-wakatime'
-
+Plug 'tpope/vim-fugitive'
 
 
 "---------------------------- coc-nvim -------------------------
