@@ -63,6 +63,11 @@ setlocal spell
 set spelllang=en_us
 inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>u
 
+"---------------------------- markdown -------------------------
+Plug 'godlygeek/tabular'
+Plug 'preservim/vim-markdown'
+    let g:vim_markdown_folding_disabled = 1
+
 " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
 call plug#end()
