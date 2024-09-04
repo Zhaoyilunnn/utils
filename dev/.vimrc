@@ -21,9 +21,9 @@ call plug#begin()
 "Plug 'rafi/awesome-vim-colorschemes'
 Plug 'sainnhe/everforest'
 Plug 'morhetz/gruvbox'
-"Plug 'rakr/vim-two-firewatch'
-"Plug 'liuchengxu/space-vim-dark'
-"Plug 'joshdick/onedark.vim'
+Plug 'rakr/vim-two-firewatch'
+Plug 'liuchengxu/space-vim-dark'
+Plug 'joshdick/onedark.vim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
 
@@ -101,17 +101,18 @@ autocmd BufWritePre * :%s#\($\n\s*\)\+\%$##e
 command! Quafu call InsertLicense('quafu')
 "----------------- License
 
-"----------------- color scheme
+"-----------------------------color schemes-------------------------
+"-----------------------------catppuccin-------------------------
 "colorscheme catppuccin " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 "colorscheme catppuccin-mocha " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
 "colorscheme catppuccin-latte " catppuccin-latte, catppuccin-frappe, catppuccin-macchiato, catppuccin-mocha
-"colorscheme onehalflight
-"colorscheme two-firewatch
-"colorscheme onedark
+
+"-----------------------------two-firewatch-------------------------
 "set background=light " or light if you prefer the light version
 "let g:two_firewatch_italics=1
 "colo two-firewatch
 
+"-----------------------------everforest-------------------------
 "" Important!!
 "if has('termguicolors')
 "  set termguicolors
@@ -133,13 +134,18 @@ command! Quafu call InsertLicense('quafu')
 "
 "colorscheme everforest
 
+"-----------------------------gruvbox-------------------------
 set background=dark
 let g:gruvbox_italic=1
 let g:gruvbox_contrast_dark='hard'
 colorscheme gruvbox
-"----------------- color scheme
 
-" color darkblue
+"-----------------------------other schemes-------------------------
+"color darkblue
+"colorscheme onehalflight
+"colorscheme onedark
+"-----------------------------color schemes-------------------------
+
 syntax on
 set expandtab
 set tabstop=4
