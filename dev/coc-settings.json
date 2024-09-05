@@ -1,6 +1,10 @@
 {
 "coc.preferences.jumpCommand": "tab drop",
 "python.linting.pylintEnabled": true,
+"python.formatting.provider": "black",
+"python.formatting.blackPath": "/home/zhaoyilun/miniconda3/envs/quingo/bin/black",
+"coc.preferences.formatOnType": true,
+"coc.preferences.formatOnSaveFiletypes": ["python"],
 "pydocstring.formatter": "google",
 "pyright.inlayHints.parameterTypes": false,
 "[markdown]": {
