@@ -2,7 +2,7 @@ set encoding=utf-8
 set nocompatible              " be iMproved, required
 filetype off                  " required
 set backspace=indent,eol,start
-set termwinsize=10*1
+set termwinsize=10*100
 set nu
 
 "------------------- Plugin Management
