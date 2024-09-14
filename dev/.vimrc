@@ -26,7 +26,9 @@ Plug 'liuchengxu/space-vim-dark'
 Plug 'joshdick/onedark.vim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 
-
+"---------------------------- rust -------------------------
+Plug 'rust-lang/rust.vim'
+    let g:rustfmt_autosave = 1
 
 "---------------------------- Misc -------------------------
 Plug 'antoyo/vim-licenses'
