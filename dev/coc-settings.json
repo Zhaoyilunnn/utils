@@ -4,10 +4,9 @@
 "python.formatting.provider": "black",
 "python.formatting.blackPath": "/home/zhaoyilun/miniconda3/envs/quingo/bin/black",
 "coc.preferences.formatOnType": true,
-"coc.preferences.formatOnSaveFiletypes": ["python"],
 "pydocstring.formatter": "google",
 "pyright.inlayHints.parameterTypes": false,
-"[markdown]": {
+"[markdown][python]": {
     "coc.preferences.formatOnSave": true
 }
 }
