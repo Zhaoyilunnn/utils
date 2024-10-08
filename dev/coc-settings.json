@@ -6,7 +6,7 @@
 "coc.preferences.formatOnType": true,
 "pydocstring.formatter": "google",
 "pyright.inlayHints.parameterTypes": false,
-"[markdown][python]": {
+"[markdown][python][c][cpp]": {
     "coc.preferences.formatOnSave": true
 }
 }
