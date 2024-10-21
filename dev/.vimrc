@@ -3,6 +3,7 @@ set nocompatible              " be iMproved, required
 filetype off                  " required
 set backspace=indent,eol,start
 set termwinsize=10*100
+"set wildoptions+=fuzzy     "use fuzzy search for cmdline-completion
 set nu
 
 "------------------- Plugin Management
@@ -34,7 +35,8 @@ Plug 'rust-lang/rust.vim'
 Plug 'antoyo/vim-licenses'
 Plug 'wakatime/vim-wakatime'
 Plug 'tpope/vim-fugitive'
-
+"file search
+Plug 'ctrlpvim/ctrlp.vim'
 
 "---------------------------- coc-nvim -------------------------
 "coc-clangd: c/c++
