@@ -3,10 +3,11 @@
 "python.linting.pylintEnabled": true,
 "python.formatting.provider": "black",
 "python.formatting.blackPath": "/home/zhaoyilun/miniconda3/envs/quingo/bin/black",
+"cmake.formatter": "/home/zhaoyilun/miniconda3/envs/quingo/bin/cmake-format",
 "coc.preferences.formatOnType": true,
 "pydocstring.formatter": "google",
 "pyright.inlayHints.parameterTypes": false,
-"[markdown][python][c][cpp]": {
+"[markdown][python][c][cpp][cmake]": {
     "coc.preferences.formatOnSave": true
 }
 }
