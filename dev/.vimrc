@@ -5,6 +5,7 @@ set backspace=indent,eol,start
 set termwinsize=10*100
 "set wildoptions+=fuzzy     "use fuzzy search for cmdline-completion
 set nu
+set cursorline
 
 "------------------- Plugin Management
 call plug#begin()
