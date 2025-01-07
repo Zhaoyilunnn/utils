@@ -1,13 +1,15 @@
 {
-"coc.preferences.jumpCommand": "tab drop",
-"python.linting.pylintEnabled": true,
-"python.formatting.provider": "black",
-"python.formatting.blackPath": "/home/zhaoyilun/miniconda3/envs/quingo/bin/black",
-"cmake.formatter": "/home/zhaoyilun/miniconda3/envs/quingo/bin/cmake-format",
-"coc.preferences.formatOnType": true,
-"pydocstring.formatter": "google",
-"pyright.inlayHints.parameterTypes": false,
-"[markdown][python][c][cpp][cmake][json]": {
+  "coc.preferences.jumpCommand": "tab drop",
+  "python.linting.pylintEnabled": true,
+  "python.formatting.provider": "black",
+  "python.formatting.blackPath": "/home/zhaoyilun/miniconda3/envs/quingo/bin/black",
+  "cmake.formatter": "/home/zhaoyilun/miniconda3/envs/quingo/bin/cmake-format",
+  "coc.preferences.formatOnType": true,
+  "coc.preferences.formatOnSaveTimeout": 5000,
+  "coc.preferences.willSaveHandlerTimeout": 5000,
+  "pydocstring.formatter": "google",
+  "pyright.inlayHints.parameterTypes": false,
+  "[markdown][python][c][cpp][cmake][json]": {
     "coc.preferences.formatOnSave": true
-}
+  }
 }
