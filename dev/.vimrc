@@ -78,6 +78,9 @@ Plug 'preservim/vim-markdown'
     let g:vim_markdown_folding_disabled = 1
     let g:vim_markdown_math = 1
 
+"---------------------------- qasm -------------------
+Plug 'openqasm/openqasm.vim'
+
 " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
 call plug#end()
