@@ -47,6 +47,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 "coc-prettier: markdown format
 "coc-pyright: python
 "coc-rust-analyzer: rust
+"coc-emoji: emoji (https://github.com/neoclide/coc-sources)
 Plug 'neoclide/coc.nvim', {'branch': 'master', 'do': 'npm ci'}
 
 "---------------------------- latex -------------------------
