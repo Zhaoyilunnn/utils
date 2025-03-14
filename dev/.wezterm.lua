@@ -10,7 +10,7 @@ local config = wezterm.config_builder()
 config.color_scheme = "AdventureTime"
 
 -- font
-config.font = wezterm.font("JetBrains Mono")
+config.font = wezterm.font("Hack Nerd Font Mono")
 
 -- start powershell
 config.default_prog = { "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe" }
