@@ -1,3 +1,11 @@
+# neovim
+
+Just link to your system's neovim configuration directory.
+
+```bash
+ln -s nvim ~/.config/nvim
+```
+
 # Vim
 
 Current version of `.vimrc` aims for vim>=9.0 (although it runs correctly on vim<9.0 now).
@@ -7,16 +15,6 @@ In the future, I plan to add some configurations that may only work on vim>=9.0
 For example, the [`catppuccin`](https://github.com/catppuccin/nvim) plugin only support 9.0+ with lua compilation.
 
 My older config for vim==8.2 can be found in `tags/v0.1.0`
-
-# neovim
-
-Just link to your system's neovim configuration directory.
-
-```bash
-ln -s nvim ~/.config/nvim
-```
-
-```
 
 ## Latex
 
