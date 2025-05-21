@@ -8,3 +8,29 @@ vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, si
 
 -- Expand 'cc' into 'CodeCompanion' in the command line
 vim.cmd([[cab cc CodeCompanion]])
+
+-- Show the full file path in the command line
+vim.keymap.set("n", "<C-g>", function()
+  local buf = vim.api.nvim_create_buf(false, true)
+  local full_path = vim.fn.expand("%:p")
+  local width = math.min(#full_path + 4, vim.o.columns)
+  local height = 1
+  local row = vim.o.lines - 3
+  local col = math.floor((vim.o.columns - width) / 2)
+
+  vim.api.nvim_open_win(buf, false, {
+    relative = "editor",
+    width = width,
+    height = height,
+    row = row,
+    col = col,
+    style = "minimal",
+    border = "single",
+  })
+
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, { " " .. full_path .. " " })
+
+  vim.defer_fn(function()
+    vim.api.nvim_buf_delete(buf, { force = true })
+  end, 3000)
+end, { desc = "Show full file path in float" })
