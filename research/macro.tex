@@ -1,0 +1,151 @@
+%% comments
+\newcommand{\ylz}[1]{\textcolor{purple}{#1}}
+\newcommand{\fixme}[1]{[\textcolor{red}{FIXME:#1}]}
+\newcommand{\tbd}[1]{[\textcolor{red}{TODO: #1}]}
+%% comments
+
+
+% fonts
+\newcommand{\tb}[1]{\textbf{#1}} % bold font
+\newcommand{\iname}[1]{\texttt{\textcolor{blue}{#1}}} % for instruction name
+\newcommand{\code}[1]{\texttt{#1}}
+% fonts
+
+\newcommand{\name}{\textsc{SYSTEM-NAME}\xspace}
+
+
+
+\newcommand{\squishlist}{
+   \begin{list}{$\bullet$}
+    {
+    \setlength{\itemsep}{0pt}      \setlength{\parsep}{0pt}
+      \setlength{\topsep}{3pt}       \setlength{\partopsep}{0pt}
+      \setlength{\listparindent}{-2pt}
+      \setlength{\itemindent}{-5pt}
+      \setlength{\leftmargin}{1em} \setlength{\labelwidth}{0em}
+      \setlength{\labelsep}{0.5em} } }
+
+\newcommand{\squishend}{
+    \end{list}  }
+
+
+% level1-enum
+\newcounter{outercounter}
+\newcommand{\squishenum}{%
+  \begin{list}{\arabic{outercounter}}{%
+    \usecounter{outercounter}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parsep}{0pt}%
+    \setlength{\topsep}{3pt}%
+    \setlength{\partopsep}{0pt}%
+    \setlength{\listparindent}{-10pt}%
+    \setlength{\itemindent}{-2pt}%
+    \setlength{\leftmargin}{1em}%
+    \setlength{\labelwidth}{0em}%
+    \setlength{\labelsep}{0.5em}%
+    \let\makelabel=\makeplainlabel%
+  }%
+}
+\newcommand{\makeplainlabel}[1]{#1.\hfill}
+\newcommand{\squishenumend}{\end{list}}
+
+% level2-enum
+\newcounter{innercounter}
+\newcommand{\squishenumII}{%
+  \begin{list}{\alph{innercounter}}{%
+    \usecounter{innercounter}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\parsep}{0pt}%
+    \setlength{\topsep}{3pt}%
+    \setlength{\partopsep}{0pt}%
+    \setlength{\listparindent}{-2pt}%
+    \setlength{\itemindent}{-10pt}%
+    \setlength{\leftmargin}{1em}%
+    \setlength{\labelwidth}{0em}%
+    \setlength{\labelsep}{0.5em}%
+    \let\makelabel=\makenestedlabel%
+  }%
+}
+\newcommand{\makenestedlabel}[1]{(#1)\hfill}
+\newcommand{\squishenumIIend}{\end{list}}
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+  \node[shape=circle,draw,fill=black,text=white,font=\bf,inner sep=0.5pt] (char)
+  {\scriptsize#1};
+}}
+
+\newcommand*\circledwhite[1]{\tikz[baseline=(char.base)]{
+  \node[shape=circle,draw,fill=white,text=black,font=\bf,inner sep=0.5pt] (char)
+  {\scriptsize#1};
+}}
+
+\newcommand{\etal}{et al.}
+\newcommand{\ie}{i.e.}
+\newcommand{\eg}{e.g.}
+\newcommand{\etc}{etc.}
+
+\newcommand{\putsec}[2]{\vspace{-0.1in}\section{#2}\label{sec:#1}\vspace{-0.05in}}
+\newcommand{\putssec}[2]{\vspace{-0.0in}\subsection{#2}\label{ssec:#1}\vspace{-0.0in}}
+\newcommand{\putsssec}[2]{\vspace{-0.0in}\subsubsection{#2}\label{sssec:#1}\vspace{-0.0in}}
+%\newcommand{\putsssecX}[1]{\vspace{0.0in}\subsubsection*{#1}\vspace{0.0in}}
+\newcommand{\putsssecX}[1]{\vspace{0.0in}\noindent\textbf{#1:}}
+
+%\newcommand{\figref}[1]{Figure~\ref{fig:#1}}
+\newcommand{\figref}[1]{Fig.~\ref{fig:#1}}
+%\newcommand{\eqnref}[1]{Equation~\ref{eq:#1}}
+\newcommand{\eqnref}[1]{Eq.~\ref{eq:#1}}
+\newcommand{\tabref}[1]{Table~\ref{tab:#1}}
+\newcommand{\secref}[1]{Section~\ref{sec:#1}}
+\newcommand{\ssecref}[1]{Section~\ref{ssec:#1}}
+\newcommand{\sssecref}[1]{Section~\ref{sssec:#1}}
+
+
+%% Comments macros %%%%%%%%%%%%%%%%%
+
+\newcommand{\COMM}[1]{#1}
+\newcommand{\yilun}[1]{\COMM{\textcolor{cyan}{\sf\bfseries Yilun: #1}}}
+\newcommand{\blc}[1]{\COMM{\textcolor{blue}{\sf\bfseries[BL: #1]}}}
+% \newcommand{\todo}[1]{\COMMENT{{\color{red}\sf\bfseries [#1]}}}
+
+% Uncomment this to remove the inline comments
+\renewcommand{\COMM}[1]{}
+
+
+\newcommand{\TODO}[1]{#1}
+\newcommand{\todo}[1]{\TODO{{\color{red}\sf\bfseries [#1]}}}
+% \renewcommand{\TODO}[1]{}
+
+\newcommand{\cnot}{$\mathrm{CNOT}$\xspace}
+\newcommand{\cz}{$\mathrm{CZ}$\xspace}
+\newcommand{\hgate}{$H$\xspace}
+\newcommand{\xgate}{$X$\xspace}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% Insight Box %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% depends on the package: \usepackage[most]{tcolorbox}
+\definecolor{myyellow}{HTML}{FBE59E}  
+\definecolor{mygreen}{HTML}{85B243}    % custom HTML color
+\definecolor{mygreenlight}{HTML}{CEE55D}    % custom HTML color
+
+
+% Define the insight box
+\newtcolorbox{insightbox}[1]{
+  colback=myyellow,           % Background color of the content
+  colframe=black,        % Frame color
+  coltitle=black,            % Title text color
+  fonttitle=\bfseries,       % Bold title
+  title=Insight #1,          % Title with parameter for numbering
+  sharp corners,             % Sharp corners for the box
+  boxrule=1pt,               % Border thickness
+  enhanced,                  % Enable advanced features
+  top=1mm,                   % Padding above content
+  bottom=1mm,                % Padding below content
+  left=1mm,                  % Left padding
+  right=1mm,                 % Right padding
+  titlerule=0.2mm,             % No line under title
+  title filled,              % Fill the title background
+  colbacktitle=mygreenlight,     % Background color of the title
+  before skip=10pt,          % Space before the box
+  after skip=10pt            % Space after the box
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%% Insight Box %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
