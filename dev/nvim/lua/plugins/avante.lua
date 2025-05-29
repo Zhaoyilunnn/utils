@@ -17,6 +17,10 @@ return {
     --   max_completion_tokens = 8192, -- Increase this to include reasoning tokens (for reasoning models)
     --   --reasoning_effort = "medium", -- low|medium|high, only used for reasoning models
     -- },
+    -- web_search_engine = {
+    --   provider = "google",
+    --   proxy = "socks5://127.0.0.1:10808",
+    -- },
   },
   -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
   build = "make",
