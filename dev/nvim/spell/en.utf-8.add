@@ -36,3 +36,6 @@ multiple
 couplers
 tunable
 timestamp
+embeddings
+Jupyter
+boolean

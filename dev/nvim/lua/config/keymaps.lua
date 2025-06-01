@@ -13,6 +13,8 @@ vim.cmd([[cab cc CodeCompanion]])
 vim.keymap.set("n", "<C-g>", function()
   local buf = vim.api.nvim_create_buf(false, true)
   local full_path = vim.fn.expand("%:p")
+  -- store the path in clipboard for easy access
+  vim.fn.setreg("+", full_path)
   local width = math.min(#full_path + 4, vim.o.columns)
   local height = 1
   local row = vim.o.lines - 3

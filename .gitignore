@@ -6,3 +6,4 @@ html.*
 .DS_Store
 .cache*
 *.bak
+.aider*

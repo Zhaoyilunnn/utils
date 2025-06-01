@@ -1,5 +1,7 @@
 return {
   "yetone/avante.nvim",
+  enabled = false,
+  -- enabled = true,
   event = "VeryLazy",
   version = false, -- Never set this value to "*"! Never!
   opts = {
@@ -8,6 +10,7 @@ return {
     provider = "copilot",
     copilot = {
       model = "gemini-2.5-pro",
+      -- model = "claude-sonnet-4-20250514",
     },
     -- openai = {
     --   endpoint = "https://api.openai.com/v1",
