@@ -8,10 +8,11 @@ return {
   opts = {
     strategies = {
       chat = {
-        adapter = {
-          name = "copilot",
-          model = "gemini-2.5-pro",
-        },
+        -- adapter = {
+        --   name = "copilot",
+        --   model = "gemini-2.5-pro",
+        -- },
+        adapter = "copilot",
       },
     },
   },
