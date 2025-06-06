@@ -5,11 +5,13 @@ return {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
   },
-  strategies = {
-    chat = {
-      adapter = {
-        name = "copilot",
-        model = "claude-sonnet-4-20250514",
+  opts = {
+    strategies = {
+      chat = {
+        adapter = {
+          name = "copilot",
+          model = "gemini-2.5-pro",
+        },
       },
     },
   },
