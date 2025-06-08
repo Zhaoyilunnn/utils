@@ -36,3 +36,6 @@ vim.keymap.set("n", "<C-g>", function()
     vim.api.nvim_buf_delete(buf, { force = true })
   end, 3000)
 end, { desc = "Show full file path in float" })
+
+-- Duplicate the current line and comment the first line
+vim.keymap.set("n", "ycc", "yygccp", { remap = true })
