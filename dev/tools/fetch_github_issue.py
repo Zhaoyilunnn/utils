@@ -44,15 +44,56 @@ def fetch_github_issue(repo: str, issue_id: str) -> dict:
     return json.loads(result.stdout)
 
 
+import re
+
 def fetch_issue_comments(comments_url: str) -> list:
-    """Fetch all comments for an issue."""
-    cmd = ["curl", "-s", "-H", "Accept: application/vnd.github.text+json", comments_url]
+    """Fetch all comments for an issue, handling pagination."""
+    all_comments = []
+    url = comments_url
 
-    result = subprocess.run(cmd, capture_output=True, text=True)
-    if result.returncode != 0:
-        raise Exception(f"Failed to fetch comments: {result.stderr}")
+    while url:
+        # Use -i to get headers, and -s for silent
+        cmd = [
+            "curl",
+            "-s",
+            "-i",
+            "-H",
+            "Accept: application/vnd.github.text+json",
+            url,
+        ]
+        result = subprocess.run(cmd, capture_output=True, text=True)
+        if result.returncode != 0:
+            raise Exception(f"Failed to fetch comments: {result.stderr}")
 
-    return json.loads(result.stdout)
+        # Split headers and body
+        header, _, body = result.stdout.partition("\r\n\r\n")
+        # Sometimes there are multiple header blocks (redirects), get the last one
+        while True:
+            h, sep, b = body.partition("\r\n\r\n")
+            if sep:
+                header = h
+                body = b
+            else:
+                break
+
+        comments = json.loads(body)
+        if isinstance(comments, dict) and comments.get("message"):
+            raise Exception(f"GitHub API error: {comments.get('message')}")
+        all_comments.extend(comments)
+
+        # Find next page from Link header
+        next_url = None
+        link_match = re.search(r'Link: (.+)', header)
+        if link_match:
+            links = link_match.group(1).split(",")
+            for link in links:
+                m = re.match(r'\s*<([^>]+)>;\s*rel="([^"]+)"', link)
+                if m and m.group(2) == "next":
+                    next_url = m.group(1)
+                    break
+        url = next_url
+
+    return all_comments
 
 
 def format_issue_with_comments(issue: dict, comments: list) -> str:
