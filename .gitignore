@@ -7,3 +7,5 @@ html.*
 .cache*
 *.bak
 .aider*
+
+temp/

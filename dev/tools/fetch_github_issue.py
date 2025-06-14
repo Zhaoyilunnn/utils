@@ -47,45 +47,54 @@ def fetch_github_issue(repo: str, issue_id: str) -> dict:
 import re
 
 def fetch_issue_comments(comments_url: str) -> list:
-    """Fetch all comments for an issue, handling pagination."""
+    """Fetch all comments for an issue, handling pagination and rate limits."""
+    import requests
     all_comments = []
     url = comments_url
 
+    # Prepare headers
+    headers = {
+        "Accept": "application/vnd.github.text+json"
+    }
+    import os
+    github_token = os.environ.get("GITHUB_TOKEN")
+    if github_token:
+        headers["Authorization"] = f"token {github_token}"
+
     while url:
-        # Use -i to get headers, and -s for silent
-        cmd = [
-            "curl",
-            "-s",
-            "-i",
-            "-H",
-            "Accept: application/vnd.github.text+json",
-            url,
-        ]
-        result = subprocess.run(cmd, capture_output=True, text=True)
-        if result.returncode != 0:
-            raise Exception(f"Failed to fetch comments: {result.stderr}")
+        print(f"Fetching comments from URL: {url}")
+        response = requests.get(url, headers=headers)
+        print("----- BEGIN RESPONSE HEADERS -----")
+        for k, v in response.headers.items():
+            print(f"{k}: {v}")
+        print("----- END RESPONSE HEADERS -----\n")
 
-        # Split headers and body
-        header, _, body = result.stdout.partition("\r\n\r\n")
-        # Sometimes there are multiple header blocks (redirects), get the last one
-        while True:
-            h, sep, b = body.partition("\r\n\r\n")
-            if sep:
-                header = h
-                body = b
-            else:
-                break
+        print("----- BEGIN BODY (first 500 chars) -----")
+        print(response.text[:500])
+        print("----- END BODY -----\n")
 
-        comments = json.loads(body)
+        if not response.text.strip():
+            print("DEBUG: Empty response body.")
+            raise Exception("Empty response body when fetching comments. Possible rate limit, network error, or missing authentication.\n"
+                            "If you are hitting GitHub's API rate limit, try setting a GITHUB_TOKEN environment variable.")
+
+        try:
+            comments = response.json()
+        except Exception as e:
+            print("DEBUG: Failed to parse JSON. Body was:\n")
+            print(response.text[:500])
+            raise Exception(f"Failed to parse comments JSON: {e}\nBody was:\n{response.text[:500]}")
+
         if isinstance(comments, dict) and comments.get("message"):
             raise Exception(f"GitHub API error: {comments.get('message')}")
         all_comments.extend(comments)
 
-        # Find next page from Link header
+        # Pagination: check for next page in Link header
         next_url = None
-        link_match = re.search(r'Link: (.+)', header)
-        if link_match:
-            links = link_match.group(1).split(",")
+        link_header = response.headers.get("Link")
+        if link_header:
+            import re
+            links = link_header.split(",")
             for link in links:
                 m = re.match(r'\s*<([^>]+)>;\s*rel="([^"]+)"', link)
                 if m and m.group(2) == "next":

@@ -1,5 +1,6 @@
 return {
   "echasnovski/mini.pairs",
+  enabled = false,
   event = "VeryLazy",
   opts = {
     modes = { insert = true, command = true, terminal = false },
@@ -12,15 +13,11 @@ return {
     skip_unbalanced = true,
     -- better deal with markdown code blocks
     markdown = true,
+    -- mappings = {
+    --   ['"""'] = { action = "open", pair = '""""""', neigh_pattern = ".", register = { cr = false } },
+    -- },
   },
-  --- test if $HOME changed
   config = function(_, opts)
     LazyVim.mini.pairs(opts)
-    vim.api.nvim_create_autocmd("FileType", {
-      pattern = "python",
-      callback = function(args)
-        vim.keymap.set("i", '"', '"', { buffer = args.buf })
-      end,
-    })
   end,
 }
