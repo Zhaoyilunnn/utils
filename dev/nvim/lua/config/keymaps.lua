@@ -39,3 +39,6 @@ end, { desc = "Show full file path in float" })
 
 -- Duplicate the current line and comment the first line
 vim.keymap.set("n", "ycc", "yygccp", { remap = true })
+
+-- Not highlight search res
+vim.keymap.set("n", "<leader>h", ":nohlsearch<CR>")
