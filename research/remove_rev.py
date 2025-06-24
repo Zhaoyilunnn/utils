@@ -16,36 +16,40 @@ import os
 import argparse
 
 
+def _find_comment_end(s: str, start: int) -> int:
+    """Find the end of a comment starting at position start."""
+    end = s.find("\n", start)
+    return len(s) if end == -1 else end + 1
+
+
 def remove_tags(s: str, prefix: str) -> str:
     """
     Remove the prefix tags (e.g., \rev{...}) and retain the content inside them.
     Handles nested braces and preserves comments.
     """
+    if not s or prefix not in s:
+        return s
+
     result = []
     i = 0
     plen = len(prefix)
-    while i < len(s):
+    s_len = len(s)
+
+    while i < s_len:
         if s[i] == "%":
             # Preserve comments to end of line
-            end = s.find("\n", i)
-            if end == -1:
-                result.append(s[i:])
-                break
-            result.append(s[i : end + 1])
-            i = end + 1
-        elif s.startswith(prefix, i):
+            end = _find_comment_end(s, i)
+            result.append(s[i:end])
+            i = end
+        elif i <= s_len - plen and s[i : i + plen] == prefix:
             # Found prefix (which includes the '{'), so parse until matching '}'
             i += plen
             brace_level = 1
             start = i
-            while i < len(s) and brace_level > 0:
+            while i < s_len and brace_level > 0:
                 if s[i] == "%":
                     # skip comment to end of line inside the tag
-                    end = s.find("\n", i)
-                    if end == -1:
-                        i = len(s)
-                        break
-                    i = end + 1
+                    i = _find_comment_end(s, i)
                 elif s[i] == "{":
                     brace_level += 1
                     i += 1
@@ -68,25 +72,33 @@ def remove_tags(s: str, prefix: str) -> str:
     return "".join(result)
 
 
-def process_content(content: str, prefix: str) -> str:
-    """
-    Remove the prefix tags (e.g., \rev{...}) and retain the content inside them.
-    Handles nested braces and preserves comments.
-    """
-    return remove_tags(content, prefix)
+def read_file(file_path: str) -> str:
+    """Read content from a file."""
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            return f.read()
+    except IOError as e:
+        print(f"Error reading {file_path}: {e}")
+        raise
+
+
+def write_file(file_path: str, content: str):
+    """Write content to a file."""
+    try:
+        with open(file_path, "w", encoding="utf-8") as f:
+            f.write(content)
+    except IOError as e:
+        print(f"Error writing {file_path}: {e}")
+        raise
 
 
 def process_file(file_path: str, prefix: str):
     """
     Process a single .tex file to remove the prefix tags.
     """
-    with open(file_path, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    new_content = process_content(content, prefix)
-
-    with open(file_path, "w", encoding="utf-8") as f:
-        f.write(new_content)
+    content = read_file(file_path)
+    new_content = remove_tags(content, prefix)
+    write_file(file_path, new_content)
 
 
 if __name__ == "__main__":
