@@ -12,98 +12,81 @@ Useful for preparing final versions of LaTeX documents after the revision proces
 is complete, by stripping revision markup while keeping the revised content.
 """
 
-import sys
 import os
 import argparse
 
 
-def process_line(
-    line: str, in_rev: bool, nested: int, prefix: str
-) -> tuple[str, int, bool]:
-    new_line = line
-    prefix_len = len(prefix)
-    for i in range(len(line)):
-        if line[i : i + prefix_len] == prefix:
-            # find the start of a prefix
-            if in_rev:
-                raise ValueError(
-                    f"Nested {prefix} found, which is not expected. The line is: "
-                    + line
-                )
-            in_rev = True
-            nested = 0
-
-            j = i + prefix_len
-            while j < len(line):
-                if line[j] == "{":
-                    nested += 1
-                elif line[j] == "}":
-                    if nested == 0:
-                        in_rev = False
-                        # found the end of the prefix
-                        # delete the prefix and "}" from the line
-                        new_line = (
-                            line[:i]
-                            + line[i + prefix_len : j]
-                            + process_line(line[j + 1 :], in_rev, nested, prefix)[0]
-                        )
+def remove_tags(s: str, prefix: str) -> str:
+    """
+    Remove the prefix tags (e.g., \rev{...}) and retain the content inside them.
+    Handles nested braces and preserves comments.
+    """
+    result = []
+    i = 0
+    plen = len(prefix)
+    while i < len(s):
+        if s[i] == "%":
+            # Preserve comments to end of line
+            end = s.find("\n", i)
+            if end == -1:
+                result.append(s[i:])
+                break
+            result.append(s[i : end + 1])
+            i = end + 1
+        elif s.startswith(prefix, i):
+            # Found prefix (which includes the '{'), so parse until matching '}'
+            i += plen
+            brace_level = 1
+            start = i
+            while i < len(s) and brace_level > 0:
+                if s[i] == "%":
+                    # skip comment to end of line inside the tag
+                    end = s.find("\n", i)
+                    if end == -1:
+                        i = len(s)
+                        break
+                    i = end + 1
+                elif s[i] == "{":
+                    brace_level += 1
+                    i += 1
+                elif s[i] == "}":
+                    brace_level -= 1
+                    if brace_level == 0:
+                        # Recursively process the inside content
+                        inner = remove_tags(s[start:i], prefix)
+                        result.append(inner)
+                        i += 1
                         break
                     else:
-                        nested -= 1
-                j += 1
-            if in_rev:
-                # if we reach here, it means we didn't find the closing "}"
-                # but we still need to remove the prefix
-                new_line = line[:i] + line[i + prefix_len :]
-            break
+                        i += 1
+                else:
+                    i += 1
         else:
-            # if not in_rev, do nothing
-            if in_rev:
-                if line[i] == "{":
-                    nested += 1
-                elif line[i] == "}":
-                    if nested == 0:
-                        in_rev = False
-                        # found the end of the prefix
-                        # delete the "}" from the line
-                        new_line = (
-                            line[:i]
-                            + process_line(line[i + 1 :], in_rev, nested, prefix)[0]
-                        )
-                    else:
-                        nested -= 1
-    return new_line, nested, in_rev
+            # Regular character
+            result.append(s[i])
+            i += 1
+    return "".join(result)
 
 
-def process_file(file_path, prefix):
+def process_content(content: str, prefix: str) -> str:
     """
-    Remove the prefix tags (e.g. "\rev{}") and only retain the content
+    Remove the prefix tags (e.g., \rev{...}) and retain the content inside them.
+    Handles nested braces and preserves comments.
     """
+    return remove_tags(content, prefix)
 
-    with open(file_path, "r", encoding="utf-8") as file:
-        in_rev = False
-        new_lines = []
-        paragraph_buffer = []
-        nested = 0
-        for line in file:
-            line = line.rstrip("\n")
-            if line.startswith("%"):
-                new_lines.append(line)  # Keep comments as they are
-                continue
-            line, nested, in_rev = process_line(line, in_rev, nested, prefix)
-            if in_rev:
-                paragraph_buffer.append(line)
-            else:
-                if paragraph_buffer:
-                    # If we have a buffer, we need to flush it
-                    new_lines.append("\n".join(paragraph_buffer))
-                    paragraph_buffer = []
-                new_lines.append(line)
 
-    # write new lines to the file
-    with open(file_path, "w", encoding="utf-8") as file:
-        for line in new_lines:
-            file.write(line + "\n")
+def process_file(file_path: str, prefix: str):
+    """
+    Process a single .tex file to remove the prefix tags.
+    """
+    with open(file_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    new_content = process_content(content, prefix)
+
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write(new_content)
 
 
 if __name__ == "__main__":
@@ -127,7 +110,6 @@ if __name__ == "__main__":
     count = 0
 
     if os.path.isfile(path):
-        # If it's a single file
         if path.endswith(".tex"):
             print(f"Processing {path}")
             process_file(path, prefix)
@@ -135,13 +117,12 @@ if __name__ == "__main__":
         else:
             print(f"Skipping {path} - not a .tex file")
     else:
-        # If it's a directory
         for root, dirs, files in os.walk(path):
             for file in files:
                 if file.endswith(".tex"):
-                    file_path = os.path.join(root, file)
-                    print(f"Processing {file_path}")
-                    process_file(file_path, prefix)
+                    tex_path = os.path.join(root, file)
+                    print(f"Processing {tex_path}")
+                    process_file(tex_path, prefix)
                     count += 1
 
     print(f"Finished processing {count} .tex file{'s' if count != 1 else ''}")

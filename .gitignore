@@ -9,3 +9,6 @@ html.*
 .aider*
 
 temp/
+
+# python
+__pycache__
