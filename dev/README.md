@@ -60,3 +60,19 @@ make reconfig -j <num-jobs>
 ```bash
 docker build . --build-arg ip=<ip> --network host
 ```
+
+# Aider
+
+- `.aider.conf.yml`: Aider configuration file.
+- `.aider.model.settings.yml`: Aider model settings file.
+
+Usage:
+
+```bash
+
+cd ~
+ln -s .aider.conf.yml .
+ln -s .aider.model.settings.yml .
+
+export GITHUB_COPILOT_TOKEN=<github-oauth-token>
+```
