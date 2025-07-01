@@ -2,6 +2,8 @@
 \newcommand{\ylz}[1]{\textcolor{purple}{#1}}
 \newcommand{\fixme}[1]{[\textcolor{red}{FIXME:#1}]}
 \newcommand{\tbd}[1]{[\textcolor{red}{TODO: #1}]}
+\newcommand{\xf}[1]{{\color{blue}#1}}
+\newcommand{\zkd}[1]{{\color{purple}#1}}
 %% comments
 
 
@@ -11,7 +13,28 @@
 \newcommand{\code}[1]{\texttt{#1}}
 % fonts
 
-\newcommand{\name}{\textsc{SYSTEM-NAME}\xspace}
+
+% revision highlight
+\newcommand{\rev}[1]{{\color{purple}#1}}
+% \renewcommand{\rev}[1]{#1} % uncomment to remove highlight color
+
+% D-HISQ
+% DIRAC: DIstRibuted quAntum Control
+% \newcommand{\name}{\tbd{\textsc{QuDist}}}
+\newcommand{\name}{\textsc{Distributed-HISQ}\xspace}
+\newcommand{\sync}{\textsc{BISP}\xspace}
+\newcommand{\fmc}{\texttt{recv.c}\xspace}
+\newcommand{\fmq}{\texttt{recv.q}\xspace}
+\newcommand{\fmt}{\texttt{FMT}\xspace}
+\newcommand{\mec}{\texttt{send.c}\xspace}
+\newcommand{\meq}{\texttt{send.q}\xspace}
+\newcommand{\met}{\texttt{MET}\xspace}
+\newcommand{\waittall}{\texttt{WAITT\_ALL}\xspace}
+\newcommand{\waitt}{\texttt{WAITT}\xspace}
+\newcommand{\waita}{\texttt{WAITA}\xspace}
+\newcommand{\waiti}{\texttt{WAITI}\xspace}
+\newcommand{\waitr}{\texttt{WAITR}\xspace}
+\newcommand{\router}{router\xspace}
 
 
 
@@ -104,10 +127,18 @@
 \newcommand{\COMM}[1]{#1}
 \newcommand{\yilun}[1]{\COMM{\textcolor{cyan}{\sf\bfseries Yilun: #1}}}
 \newcommand{\blc}[1]{\COMM{\textcolor{blue}{\sf\bfseries[BL: #1]}}}
+% \newcommand{\blc}[1]{\textcolor{blue}{[BL: #1]}}
+% \newcommand{\xulong}[1]{\COMMENT{\textcolor{brown}{\sf\bfseries Xulong: #1}}}
+% \newcommand{\yanan}[1]{\COMMENT{\textcolor{green}{\sf\bfseries Yanan: #1}}}
+% \newcommand{\amanda}[1]{\COMMENT{\textcolor{purple}{\sf\bfseries Amanda: #1}}}
+% \newcommand{\devin}[1]{\COMMENT{\textcolor{orange}{\sf\bfseries Devin: #1}}}
+
+% \definecolor{shiv_purple}{rgb}{0.6       ,  0.19607843,  0.8}
+% \newcommand{\shiv}[1]{\COMMENT{\textcolor{shiv_purple}{\sf\bfseries Shiv: #1}}}
 % \newcommand{\todo}[1]{\COMMENT{{\color{red}\sf\bfseries [#1]}}}
 
 % Uncomment this to remove the inline comments
-\renewcommand{\COMM}[1]{}
+% \renewcommand{\COMM}[1]{}
 
 
 \newcommand{\TODO}[1]{#1}
@@ -119,33 +150,3 @@
 \newcommand{\hgate}{$H$\xspace}
 \newcommand{\xgate}{$X$\xspace}
 
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%% Insight Box %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% depends on the package: \usepackage[most]{tcolorbox}
-\definecolor{myyellow}{HTML}{FBE59E}  
-\definecolor{mygreen}{HTML}{85B243}    % custom HTML color
-\definecolor{mygreenlight}{HTML}{CEE55D}    % custom HTML color
-
-
-% Define the insight box
-\newtcolorbox{insightbox}[1]{
-  colback=myyellow,           % Background color of the content
-  colframe=black,        % Frame color
-  coltitle=black,            % Title text color
-  fonttitle=\bfseries,       % Bold title
-  title=Insight #1,          % Title with parameter for numbering
-  sharp corners,             % Sharp corners for the box
-  boxrule=1pt,               % Border thickness
-  enhanced,                  % Enable advanced features
-  top=1mm,                   % Padding above content
-  bottom=1mm,                % Padding below content
-  left=1mm,                  % Left padding
-  right=1mm,                 % Right padding
-  titlerule=0.2mm,             % No line under title
-  title filled,              % Fill the title background
-  colbacktitle=mygreenlight,     % Background color of the title
-  before skip=10pt,          % Space before the box
-  after skip=10pt            % Space after the box
-}
-%%%%%%%%%%%%%%%%%%%%%%%%%% Insight Box %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
