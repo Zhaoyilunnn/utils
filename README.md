@@ -6,7 +6,7 @@ A comprehensive collection of development tools, scripts, and configurations for
 
 ### `dev/` - Development Environment
 
-- **Neovim Configuration**: Complete LazyVim setup with plugins for modern development
+- **Neovim Configuration**: `dev/dotfiles/.config/nvim` (see below for setup)
   - Copilot integration, code completion, linting
   - LaTeX snippets for mathematical note-taking
   - Custom keymaps and autocmds
@@ -14,6 +14,13 @@ A comprehensive collection of development tools, scripts, and configurations for
 - **Tools**:
   - `fetch_github_issue.py`: Download GitHub issues with comments for offline viewing
   - `fetch_github_copilot_models.sh`: Retrieve GitHub Copilot model information
+
+### `dev/dotfiles/` - Configuration Files
+
+- **Neovim config**: `dev/dotfiles/.config/nvim`
+- **Vim config**: `dev/dotfiles/.vimrc`
+- **Shell, git, npm, and other configs**: All personal configuration files are organized under this directory.
+- **Aider config**: `.aider.conf.yml` and `.aider.model.settings.yml` are in `dev/dotfiles/`
 
 ### `figure/` - Academic Figure Processing
 
@@ -64,7 +71,7 @@ Modern Vim configuration optimized for coding and academic writing.
 **Setup**:
 
 ```bash
-ln -s dev/nvim ~/.config/nvim
+ln -s dev/dotfiles/.config/nvim ~/.config/nvim
 ```
 
 **Key Features**:
@@ -113,6 +120,6 @@ export GITHUB_TOKEN="your_github_token"
 ### Quick Start
 
 1. Clone the repository
-2. Link configurations: `ln -s dev/nvim ~/.config/nvim`
+2. Link configurations: `ln -s dev/dotfiles/.config/nvim ~/.config/nvim`
 3. Install required packages based on tools you plan to use
 4. Set environment variables as needed

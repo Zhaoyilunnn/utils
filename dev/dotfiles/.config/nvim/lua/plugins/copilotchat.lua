@@ -8,7 +8,8 @@ return {
     build = "make tiktoken", -- Only on MacOS or Linux
     opts = {
       -- See Configuration section for options
-      model = "gemini-2.5-pro",
+      -- model = "gemini-2.5-pro",
+      model = "gpt-4.1",
     },
     -- See Commands section for default commands if you want to lazy load on them
   },

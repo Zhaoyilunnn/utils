@@ -1,5 +1,6 @@
 return {
   "GeorgesAlkhouri/nvim-aider",
+  enabled = false,
   cmd = "Aider",
   -- Example key mappings for common actions:
   keys = {

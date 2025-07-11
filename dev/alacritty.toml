@@ -1,3 +1,8 @@
 [font]
 size = 12.0
 normal = { family = "Hack Nerd Font Mono", style = "Regular" }
+
+
+# https://github.com/alacritty/alacritty/issues/7608#issuecomment-1975006973
+[keyboard]
+bindings = [{ key = "Slash", mods = "Control", chars = "\u001f" }]
