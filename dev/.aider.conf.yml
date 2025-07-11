@@ -9,6 +9,7 @@ model: openai/gpt-4.1
 weak-model: openai/gpt-4o-mini
 show-model-warnings: false
 disable-playwright: false
-playwright-proxy: "socks5://127.0.0.1:10808"
+# playwright-proxy: "socks5://127.0.0.1:10808"
 auto-commits: false
-add-gitignore-files: true
+# add-gitignore-files: true
+watch-files: true
