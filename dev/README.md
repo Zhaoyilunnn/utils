@@ -1,18 +1,19 @@
 # neovim
 
-Just link to your system's neovim configuration directory.
+The Neovim configuration is in the `dotfiles/.config/nvim` directory.  
+To use it, link the configuration to your system's Neovim config path:
 
 ```bash
-ln -s nvim ~/.config/nvim
+ln -s dev/dotfiles/.config/nvim ~/.config/nvim
 ```
 
 # Vim
 
-Current version of `.vimrc` aims for vim>=9.0 (although it runs correctly on vim<9.0 now).
+The current version of `.vimrc` is in the `dotfiles` directory and aims for vim>=9.0 (although it runs correctly on vim<9.0 now).
 
 In the future, I plan to add some configurations that may only work on vim>=9.0
 
-For example, the [`catppuccin`](https://github.com/catppuccin/nvim) plugin only support 9.0+ with lua compilation.
+For example, the [`catppuccin`](https://github.com/catppuccin/nvim) plugin only supports 9.0+ with lua compilation.
 
 My older config for vim==8.2 can be found in `tags/v0.1.0`
 
@@ -23,14 +24,13 @@ My older config for vim==8.2 can be found in `tags/v0.1.0`
 
 ## Build Vim From Source
 
-Building vim is simple. But you need read the instructions with its code repository.
+Building vim is simple. But you need to read the instructions in its code repository.
 
 A sample workflow is
 
-1. clone the repository
+1. Clone the repository
 
 ```bash
-
 git clone https://github.com/vim/vim.git
 cd vim
 ```
@@ -45,7 +45,7 @@ CONF_OPT_LUA = --enable-luainterp
 
 ```
 
-3. Buid and install
+3. Build and install
 
 ```
 make reconfig -j <num-jobs>
@@ -63,16 +63,15 @@ docker build . --build-arg ip=<ip> --network host
 
 # Aider
 
-- `.aider.conf.yml`: Aider configuration file.
-- `.aider.model.settings.yml`: Aider model settings file.
+- `.aider.conf.yml`: Aider configuration file (in `dotfiles`).
+- `.aider.model.settings.yml`: Aider model settings file (in `dotfiles`).
 
 Usage:
 
 ```bash
-
 cd ~
-ln -s .aider.conf.yml .
-ln -s .aider.model.settings.yml .
+ln -s dev/dotfiles/.aider.conf.yml .
+ln -s dev/dotfiles/.aider.model.settings.yml .
 
 export GITHUB_COPILOT_TOKEN=<github-oauth-token>
 ```
