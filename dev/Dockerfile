@@ -9,9 +9,12 @@ ARG port=10810
 RUN echo "alias set_proxy=\"export https_proxy=socks5://${ip}:${port} && export http_proxy=socks5://${ip}:${port}\"" >> /root/.bashrc
 RUN echo "alias unset_proxy=\"unset http_proxy https_proxy\"" >> /root/.bashrc
 
-# Install vim, git, curl
+# Enable bash-completion in bashrc
+RUN echo 'if [ -f /etc/bash_completion ]; then\n    . /etc/bash_completion\nfi' >> /root/.bashrc
+
+# Install vim, git, curl, bash-completion
 RUN apt-get update && \
-    apt-get install -y vim git curl
+    apt-get install -y vim git curl bash-completion
 
 # Install other utilities
 # RUN apt-get -y install apt-file software-properties-common iproute2 iputils-ping
