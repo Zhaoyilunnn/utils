@@ -1,15 +1,23 @@
-openai-api-base: https://api.githubcopilot.com
-
-model: openai/gpt-4.1
+############ Legacy config ###########################
+# openai-api-base: https://api.githubcopilot.com
+# model: openai/gpt-4.1
 # model: openai/claude-sonnet-4
 # model: openai/gemini-2.5-pro
 # model: openai/claude-3.7-sonnet-thought
 # model: openai/o4-mini-2025-04-16
+# weak-model: openai/gpt-4o-mini
+############ Legacy config ###########################
 
-weak-model: openai/gpt-4o-mini
+# Native support by litellm:
+# https://github.com/Aider-AI/aider/issues/2227#issuecomment-3141551921
+model: github_copilot/gpt-4.1
+weak-model: github_copilot/gpt-4.0
 show-model-warnings: false
+# max-chat-history-tokens: 8000
+
+# my custom config
 disable-playwright: false
 # playwright-proxy: "socks5://127.0.0.1:10808"
 auto-commits: false
-# add-gitignore-files: true
+add-gitignore-files: true
 watch-files: true
