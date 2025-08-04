@@ -43,11 +43,23 @@ def main():
     print(f"Original outbound tag: {original_outbound_tag}")
 
     # 2. Prompt user for new SOCKS outbound info
-    print("Please input the following information for the new us-proxy outbound:")
-    address = input("Server IP address: ").strip()
-    port = int(input("Server port: ").strip())
-    user = input("Username: ").strip()
-    password = input("Password: ").strip()
+    print("You can input the SOCKS outbound info in two ways:")
+    print("1. Enter all info in one line, format: <ip>:<port>:<username>:<password>")
+    print("2. Enter each field one by one (press Enter to choose this mode)")
+
+    combo_input = input("Input (or press Enter to input fields one by one): ").strip()
+    if combo_input:
+        try:
+            address, port, user, password = combo_input.split(":")
+            port = int(port)
+        except Exception as e:
+            print("Invalid format. Please use <ip>:<port>:<username>:<password>")
+            return
+    else:
+        address = input("Server IP address: ").strip()
+        port = int(input("Server port: ").strip())
+        user = input("Username: ").strip()
+        password = input("Password: ").strip()
 
     # 3. Create new outbound dict (like the us-proxy example)
     new_outbound = {
