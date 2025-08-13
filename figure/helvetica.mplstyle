@@ -1,0 +1,9 @@
+# https://matplotlib.org/stable/api/matplotlib_configuration_api.html#default-values-and-styling
+font.weight: "bold"
+font.family: sans-serif
+font.sans-serif: Helvetica Neue
+xtick.labelsize: 23 # fontsize - 2
+ytick.labelsize: 23 # fontsize - 2
+axes.labelsize: 25 # fontsize
+axes.labelweight: "bold"
+lines.markersize: 10
