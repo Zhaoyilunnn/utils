@@ -1,7 +1,6 @@
 *.pdf
 *temp*
 *.tar.gz
-*.json
 html.*
 .DS_Store
 .cache*
