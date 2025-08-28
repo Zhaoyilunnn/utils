@@ -7,7 +7,7 @@ vim.keymap.set({ "n", "v" }, "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr
 vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
 
 -- Expand 'cc' into 'CodeCompanion' in the command line
-vim.cmd([[cab cc CodeCompanion]])
+vim.cmd([[cab cn CodeCompanion]])
 
 -- Show the full file path in the command line
 -- and copy to system clipboard
