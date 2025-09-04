@@ -1,2 +1,5 @@
+# https://github.com/DavidAnson/markdownlint-cli2/blob/main/test/markdownlint-cli2-yaml-example/.markdownlint-cli2.yaml
 config:
   MD013: false
+  MD033:
+    allowed_elements: ["summary", "details"]
