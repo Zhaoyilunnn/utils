@@ -21,3 +21,4 @@ disable-playwright: false
 auto-commits: false
 add-gitignore-files: true
 watch-files: true
+gitignore: false

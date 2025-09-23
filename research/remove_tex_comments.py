@@ -15,7 +15,8 @@ def remove_comments_from_tex_file(filename):
 
         # Remove everything after % unless the % is in a verbatim environment
         # For simplicity, we ignore verbatim environments here
-        if "%" in line:
+        # "\\%" means percent sign in LaTeX
+        if "%" in line and "\\%" not in line:
             # Only keep content before %
             line = line.split("%", 1)[0]
         # Remove trailing whitespace
