@@ -10,6 +10,7 @@ return {
       -- See Configuration section for options
       -- model = "gemini-2.5-pro",
       model = "gpt-4.1",
+      -- model = "gpt-5-mini",
     },
     -- See Commands section for default commands if you want to lazy load on them
   },

@@ -9,9 +9,10 @@
 
 -- TODO: remove this whenever possible
 -- Disable autoformat for python files
--- vim.api.nvim_create_autocmd({ "FileType" }, {
---   pattern = { "python", "toml" },
---   callback = function()
---     vim.b.autoformat = false
---   end,
--- })
+vim.api.nvim_create_autocmd({ "FileType" }, {
+  -- pattern = { "python", "toml" },
+  pattern = { "toml" },
+  callback = function()
+    vim.b.autoformat = false
+  end,
+})
