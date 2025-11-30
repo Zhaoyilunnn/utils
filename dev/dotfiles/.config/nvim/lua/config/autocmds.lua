@@ -9,10 +9,17 @@
 
 -- TODO: remove this whenever possible
 -- Disable autoformat for python files
+-- vim.api.nvim_create_autocmd({ "FileType" }, {
+--   pattern = { "python", "toml" },
+--   callback = function()
+--     vim.b.autoformat = false
+--   end,
+-- })
+
+-- Disable spell check for certain filetypes
 vim.api.nvim_create_autocmd({ "FileType" }, {
-  -- pattern = { "python", "toml" },
-  pattern = { "toml" },
+  pattern = { "python", "cpp", "rust" },
   callback = function()
-    vim.b.autoformat = false
+    vim.opt_local.spell = false
   end,
 })

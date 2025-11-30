@@ -4,7 +4,7 @@
 
 -- spelling check
 vim.opt.spell = true
-vim.opt.spelllang = "en_us"
+vim.opt.spelllang = { "en_us", "cjk" }
 
 -- change line automatically
 vim.opt.wrap = true
