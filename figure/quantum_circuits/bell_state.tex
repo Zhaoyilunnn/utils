@@ -1,0 +1,46 @@
+% !TeX program = pdflatex
+\documentclass[border=6pt]{standalone}
+\usepackage{amsmath}
+\usepackage{braket}
+\usepackage{physics}
+\usepackage{booktabs}
+\pagestyle{empty}
+
+\begin{document}
+
+\begin{minipage}{\linewidth}
+Prepare the Bell state $\ket{\Phi^+} = \frac{1}{\sqrt{2}}(\ket{00}+\ket{11})$ from $\ket{00}$.
+
+1. Apply $H\otimes I$ to $\ket{00}$.
+\[
+(H\otimes I)\ket{00}
+= \left(\frac{\ket{0}+\ket{1}}{\sqrt{2}}\right)\otimes \ket{0}
+= \frac{1}{\sqrt{2}}(\ket{00}+\ket{10}).
+\]
+
+2. Apply CNOT with qubit 1 as control and qubit 2 as target.
+\[
+\operatorname{CNOT}\,\ket{00}=\ket{00},\quad \operatorname{CNOT}\,\ket{10}=\ket{11}.
+\]
+Thus,
+\[
+\operatorname{CNOT}\,\frac{1}{\sqrt{2}}(\ket{00}+\ket{10})
+= \frac{1}{\sqrt{2}}(\ket{00}+\ket{11})
+= \ket{\Phi^+}.
+\]
+
+\vspace{6pt}
+% \textbf{Matrix viewpoint (optional).}
+% \\
+% Using $H=\tfrac{1}{\sqrt{2}}\begin{bmatrix}1&1\\1&-1\end{bmatrix}$ and $\mathrm{CNOT}=\begin{bmatrix}1&0&0&0\\0&1&0&0\\0&0&0&1\\0&0&1&0\end{bmatrix}$,
+% \[
+% (H\otimes I)\ket{00} = \frac{1}{\sqrt{2}}\begin{bmatrix}1\\0\\1\\0\end{bmatrix},\quad
+% \mathrm{CNOT}\,\frac{1}{\sqrt{2}}\begin{bmatrix}1\\0\\1\\0\end{bmatrix}
+% = \frac{1}{\sqrt{2}}\begin{bmatrix}1\\0\\0\\1\end{bmatrix}
+% \leftrightarrow \frac{1}{\sqrt{2}}(\ket{00}+\ket{11}).
+% \]
+%
+% \vspace{6pt}
+% \textbf{Result:} $\ket{\Phi^+} = \dfrac{1}{\sqrt{2}}(\ket{00}+\ket{11})$.
+\end{minipage}
+\end{document}

@@ -11,3 +11,12 @@ temp/
 
 # python
 __pycache__
+
+
+# Latex
+*.aux
+*.bbl
+*.log
+
+# Figure
+*.svg

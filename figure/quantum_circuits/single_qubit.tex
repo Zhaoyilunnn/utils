@@ -1,0 +1,25 @@
+% !TeX program = pdflatex
+\documentclass[tikz,border=3pt]{standalone}
+\usepackage{quantikz}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\pagestyle{empty}
+
+\begin{document}
+% Single-qubit gates: H, S, T with matrices
+% \renewcommand{\arraystretch}{2}
+\begin{tabular}{@{}cc@{}}
+\toprule
+Gate & Unitary \\
+\midrule
+$H$ & $ \frac{1}{\sqrt{2}}\begin{bmatrix}1 & 1\\ 1 & -1\end{bmatrix}$ \\\\
+$S$ & $ \begin{bmatrix}1 & 0\\ 0 & i\end{bmatrix}$ \\\\
+$T$ & $ \begin{bmatrix}1 & 0\\ 0 & e^{i\pi/4}\end{bmatrix}$ \\
+\bottomrule
+\end{tabular}
+
+\vspace{8pt}
+\begin{quantikz}
+\lstick{$\ket{\psi}$} & \gate{H} & \gate{S} & \gate{T} & \qw
+\end{quantikz}
+\end{document}

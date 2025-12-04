@@ -1,0 +1,35 @@
+% !TeX program = pdflatex
+\documentclass[tikz,border=3pt]{standalone}
+\usepackage{quantikz}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\pagestyle{empty}
+
+\begin{document}
+% Two-qubit gates: CNOT, CZ with matrices
+\renewcommand{\arraystretch}{1.4}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Gate & Unitary \\
+\midrule
+CNOT & $\displaystyle \begin{bmatrix}
+1&0&0&0\\
+0&1&0&0\\
+0&0&0&1\\
+0&0&1&0
+\end{bmatrix}$ \\\\
+CZ & $\displaystyle \begin{bmatrix}
+1&0&0&0\\
+0&1&0&0\\
+0&0&1&0\\
+0&0&0&-1
+\end{bmatrix}$ \\
+\bottomrule
+\end{tabular}
+
+\vspace{8pt}
+\begin{quantikz}
+\lstick{$\ket{\psi_1}$} & \ctrl{1} & \ctrl{1} & \qw \\
+\lstick{$\ket{\psi_2}$} & \targ{} & \gate{Z} & \qw
+\end{quantikz}
+\end{document}
