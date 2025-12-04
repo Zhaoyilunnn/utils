@@ -1,0 +1,29 @@
+% !TeX program = pdflatex
+\documentclass[tikz,border=3pt]{standalone}
+\usepackage{quantikz}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\pagestyle{empty}
+
+\begin{document}
+% % Two-qubit gate: SWAP with matrix
+% \renewcommand{\arraystretch}{1.4}
+% \begin{tabular}{@{}ll@{}}
+% \toprule
+% Gate & Unitary \\
+% \midrule
+% SWAP & $\displaystyle \begin{bmatrix}
+% 1&0&0&0\\
+% 0&0&1&0\\
+% 0&1&0&0\\
+% 0&0&0&1
+% \end{bmatrix}$ \\
+% \bottomrule
+% \end{tabular}
+
+\vspace{8pt}
+\begin{quantikz}
+\lstick{$\ket{\psi_1}$} & \swap{1} & \qw \\
+\lstick{$\ket{\psi_2}$} & \targX{} & \qw
+\end{quantikz}
+\end{document}
