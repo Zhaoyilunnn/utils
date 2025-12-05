@@ -94,7 +94,7 @@ def compare_titles(a_titles, b_titles):
     return missing
 
 
-def build_merged_bib(a_bib, b_bib, output_file):
+def build_merged_bib(a_bib, b_bib, output_file, keep_b: bool = False):
     """
     For each entry in A:
       - If its title matches (distance <= 2) any entry in B, use B's entry.
@@ -119,6 +119,9 @@ def build_merged_bib(a_bib, b_bib, output_file):
                     used_keys.add(b_key)
                 found = True
                 break
+            else:
+                if keep_b:
+                    key_to_entry[b_key] = b_entry
         if not found:
             if a_key not in used_keys:
                 key_to_entry[a_key] = a_entry
@@ -134,10 +137,11 @@ def build_merged_bib(a_bib, b_bib, output_file):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 4:
-        print("用法: python compare_bib.py A.bib B.bib merged.bib")
+    if len(sys.argv) not in (4, 5):
+        print("用法: python compare_bib.py A.bib B.bib merged.bib [keep_b]")
         sys.exit(1)
     A, B, OUT = sys.argv[1], sys.argv[2], sys.argv[3]
+    keep_b = len(sys.argv) == 5 and sys.argv[4].lower() == "keep_b"
     a_entries = parse_bib_entries(A)
     b_entries = parse_bib_entries(B)
     a_titles = {k: v[0] for k, v in a_entries.items()}
@@ -149,4 +153,4 @@ if __name__ == "__main__":
     print("结果已写入 diff.txt")
     for key, title in missing:
         print(f"{key}: {title}")
-    build_merged_bib(A, B, OUT)
+    build_merged_bib(A, B, OUT, keep_b=keep_b)
