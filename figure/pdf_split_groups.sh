@@ -8,7 +8,7 @@ set -euo pipefail
 # - GROUP_SIZE: positive integer, number of pages per chunk
 # - OUTPUT_PREFIX: optional output file prefix (default: basename of INPUT_PDF without extension)
 #
-# Outputs files named: ${OUTPUT_PREFIX}_part001.pdf, ${OUTPUT_PREFIX}_part002.pdf, ...
+# Outputs files named: ${OUTPUT_PREFIX}_1-10.pdf, ${OUTPUT_PREFIX}_11-20.pdf, ... (using page ranges)
 
 usage() {
   echo "Usage: $(basename "$0") INPUT_PDF GROUP_SIZE [OUTPUT_PREFIX]" >&2
@@ -70,8 +70,8 @@ while [[ $start -le $total_pages ]]; do
   if [[ $end -gt $total_pages ]]; then
     end=$total_pages
   fi
-  printf -v part_str "%03d" "$part"
-  out_file="${output_prefix}_part${part_str}.pdf"
+
+  out_file="${output_prefix}_${start}-${end}.pdf"
   echo "Creating $out_file (pages ${start}-${end})"
   # pdftk uses 1-based inclusive ranges
   pdftk "$input_pdf" cat ${start}-${end} output "$out_file"
