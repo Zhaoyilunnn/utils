@@ -1,6 +1,6 @@
 import os
 
-EXCLUDE_FILES = {"main.tex"}
+EXCLUDE_FILES = {"main.tex", "macro.tex"}
 
 
 def remove_comments_from_tex_file(filename):
@@ -16,6 +16,7 @@ def remove_comments_from_tex_file(filename):
         # Remove everything after % unless the % is in a verbatim environment
         # For simplicity, we ignore verbatim environments here
         # "\\%" means percent sign in LaTeX
+        # FIXME: if a line has a \\% but is a comment, this line of comment will not be removed
         if "%" in line and "\\%" not in line:
             # Only keep content before %
             line = line.split("%", 1)[0]
