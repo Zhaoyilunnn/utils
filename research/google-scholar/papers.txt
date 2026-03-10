@@ -1,0 +1,35 @@
+Cim-mlc: A multi-level compilation stack for computing-in-memory accelerators
+Chipletizer: Repartitioning socs for cost-effective chiplet integration
+Deepburning-mixq: An open source mixed-precision neural network accelerator design framework for fpgas
+Full state quantum circuit simulation beyond memory limit
+Improving large language model hardware generating quality through post-llm search
+Chipgpt: How far are we from natural language hardware design
+CTA: Hardware-software co-design for compressed token attention mechanism
+GIA: A reusable general interposer architecture for agile chiplet integration
+Optimus: An operator fusion framework for deep neural networks
+A framework for neural network architecture and compile co-optimization
+Reexamining cgra memory sub-system for higher memory utilization and performance
+Amphis: Managing Reconfigurable Processor Architectures With Generative Adversarial Learning
+Deepburning-seg: Generating dnn accelerators of segment-grained pipeline architecture
+Variation enhanced attacks against rram-based neuromorphic computing system
+Network pruning for bit-serial accelerators
+Processing-in-SRAM acceleration for ultra-low power visual 3D perception
+VStore: in-storage graph based vector search accelerator
+Noception: a fast ppa prediction framework for network-on-chips using graph neural network
+IVP: An intelligent video processing architecture for video streaming
+Survey on chiplets: interface, interconnect and integration methodology
+ASBP: Automatic structured bit-pruning for RRAM-based NN accelerator
+An intelligent video processing architecture for edge-cloud video streaming
+GCiM: A near-data processing accelerator for graph construction
+TARe: Task-adaptive in-situ ReRAM computing for graph learning
+PixelSieve: Towards Efficient Activity Analysis From Compressed Video Streams
+Network-on-interposer design for agile neural-network processor chip customization
+HyCA: A hybrid computing architecture for fault-tolerant deep learning
+GLIST: Towards in-storage graph learning
+EnGN: A high-throughput and energy-efficient accelerator for large graph neural networks
+Cognitive SSD: A deep learning engine for In-Storage data retrieval
+You only search once: A fast automation framework for single-stage dnn/accelerator co-design
+Optimus: towards optimal layer-fusion on deep learning processors
+On-line fault protection for ReRAM-based neural networks
+DeepBurning: Automatic generation of FPGA-based learning accelerators for the neural network family
+Primepar: Efficient spatial-temporal tensor partitioning for large transformer model training
