@@ -1,0 +1,4 @@
+interface:
+  display_name: "Inspect PAC Proxy"
+  short_description: "Trace PAC rules to local and upstream proxy"
+  default_prompt: "Use $inspect-pac-proxy to trace a PAC file to its local listener and current upstream proxy endpoint."
