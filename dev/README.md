@@ -1,15 +1,17 @@
 # neovim
 
-The Neovim configuration is in the `dotfiles/.config/nvim` directory.  
-To use it, link the configuration to your system's Neovim config path:
+The Neovim configuration is managed in a standalone chezmoi repo:
+`https://github.com/Zhaoyilunnn/dotfiles`.
+
+To apply dotfiles on a machine:
 
 ```bash
-ln -s dev/dotfiles/.config/nvim ~/.config/nvim
+chezmoi init --apply Zhaoyilunnn
 ```
 
 # Vim
 
-The current version of `.vimrc` is in the `dotfiles` directory and aims for vim>=9.0 (although it runs correctly on vim<9.0 now).
+The current `.vimrc` is also managed by the standalone dotfiles repo and aims for vim>=9.0 (although it runs correctly on vim<9.0 now).
 
 In the future, I plan to add some configurations that may only work on vim>=9.0
 
@@ -63,15 +65,12 @@ docker build . --build-arg ip=<ip> --network host
 
 # Aider
 
-- `.aider.conf.yml`: Aider configuration file (in `dotfiles`).
-- `.aider.model.settings.yml`: Aider model settings file (in `dotfiles`).
+- `.aider.conf.yml` and `.aider.model.settings.yml` are managed in:
+  - `https://github.com/Zhaoyilunnn/dotfiles`
 
 Usage:
 
 ```bash
-cd ~
-ln -s dev/dotfiles/.aider.conf.yml .
-ln -s dev/dotfiles/.aider.model.settings.yml .
-
+chezmoi init --apply Zhaoyilunnn
 export GITHUB_COPILOT_TOKEN=<github-oauth-token>
 ```
