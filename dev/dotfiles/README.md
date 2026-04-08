@@ -1,76 +1,27 @@
-# Dotfiles (managed by chezmoi)
+# Dotfiles (legacy in utils)
 
-This directory is the `chezmoi` source for this machine.
+This directory is no longer the primary dotfiles source.
 
-## Why chezmoi
+## Where active dotfiles live now
 
-`chezmoi` makes dotfiles reproducible across devices:
+Use the standalone repository:
 
-- track desired state in Git
-- preview changes before apply
-- selectively manage files/directories
-- support exact directories when needed
+- https://github.com/Zhaoyilunnn/dotfiles
 
-## Current managed scope
+That repository is the active chezmoi source and currently manages:
 
-- `~/.config/nvim` (managed as `exact`)
-- `~/.codex/skills/inspect-pac-proxy` (non-exact)
-- `~/bootstrap.sh`
+- `~/.config/nvim` (exact)
+- `~/.codex/skills/inspect-pac-proxy`
 
-Notes:
+## Why this directory still exists
 
-- `exact` means extra files in target directory can be removed.
-- non-exact means only declared files are synced; unrelated extra files are usually kept.
+`utils/dev/dotfiles` keeps legacy configs that are still tracked in the `utils` repo
+(`.vimrc`, `.aider.*`, `.bashrc.ext`, etc.).
 
-## Daily commands
+The nvim/codex managed parts were moved out to the standalone dotfiles repo.
+
+## Setup
 
 ```bash
-# confirm source
-chezmoi source-path
-
-# check what is managed
-chezmoi managed
-
-# check drift
-chezmoi status
-chezmoi diff
-
-# apply desired state
-chezmoi apply
-```
-
-## Bootstrap on a new machine
-
-```bash
-git clone https://github.com/Zhaoyilunnn/utils.git ~/utils
-~/utils/dev/dotfiles/bootstrap.sh
-```
-
-`bootstrap.sh` runs:
-
-```bash
-chezmoi init --source <this-directory>
-chezmoi apply
-```
-
-## Add new managed targets
-
-```bash
-# preview
-chezmoi add -n -v ~/.somefile
-
-# manage
-chezmoi add ~/.somefile
-```
-
-For a directory that must be fully controlled:
-
-```bash
-chezmoi add --exact ~/.some-directory
-```
-
-To stop managing a target:
-
-```bash
-chezmoi forget --force ~/.somefile
+chezmoi init --apply Zhaoyilunnn
 ```
