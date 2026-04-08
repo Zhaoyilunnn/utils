@@ -11,7 +11,7 @@ chezmoi init --apply Zhaoyilunnn
 
 # Vim
 
-The current `.vimrc` is also managed by the standalone dotfiles repo and aims for vim>=9.0 (although it runs correctly on vim<9.0 now).
+The current `.vimrc` in this repository (`dev/dotfiles/.vimrc`) aims for vim>=9.0 (although it runs correctly on vim<9.0 now).
 
 In the future, I plan to add some configurations that may only work on vim>=9.0
 
@@ -65,12 +65,14 @@ docker build . --build-arg ip=<ip> --network host
 
 # Aider
 
-- `.aider.conf.yml` and `.aider.model.settings.yml` are managed in:
-  - `https://github.com/Zhaoyilunnn/dotfiles`
+- `.aider.conf.yml` and `.aider.model.settings.yml` remain in this repository under `dev/dotfiles/`.
 
 Usage:
 
 ```bash
-chezmoi init --apply Zhaoyilunnn
+cd ~
+ln -s dev/dotfiles/.aider.conf.yml .
+ln -s dev/dotfiles/.aider.model.settings.yml .
+
 export GITHUB_COPILOT_TOKEN=<github-oauth-token>
 ```

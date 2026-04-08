@@ -22,5 +22,8 @@ __pycache__
 *.svg
 
 # Managed in standalone repo: https://github.com/Zhaoyilunnn/dotfiles
-/dev/dotfiles/
+# Keep these out of utils repo:
+/dev/dotfiles/.config/nvim/
+/dev/dotfiles/dot_codex/
+/dev/dotfiles/dot_config/
 /dev/dotfiles-chezmoi/

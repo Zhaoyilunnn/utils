@@ -17,9 +17,10 @@ A comprehensive collection of development tools, scripts, and configurations for
 
 ### Dotfiles
 
-- Dotfiles are managed in a dedicated repository:
-  - `https://github.com/Zhaoyilunnn/dotfiles`
-- Managed via chezmoi (`dot_config`, `dot_codex`, etc.).
+- Only these parts are moved to the standalone dotfiles repo:
+  - `nvim` config (`.config/nvim`)
+  - `codex` skill config (`dot_codex`, `dot_config`)
+- Other legacy config files under `dev/dotfiles/` remain in this `utils` repo.
 
 ### `figure/` - Academic Figure Processing
 
