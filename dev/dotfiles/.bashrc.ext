@@ -32,4 +32,30 @@ export MANPATH=$HOME/.local/texlive//2024/texmf-dist/doc/man:${MANPATH}
 export INFOPATH=$HOME/.local/texlive//2024/texmf-dist/doc/info:${INFOPATH}
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
+
+
+# sudo apt update
+# sudo apt install fzf fd-find xdg-utils
+# 世界上最优雅的命令行搜索并打开文件的快捷命令
+o() {
+    # 1. 如果安装了 fdfind，就用它作为 fzf 的底层搜索引擎（极速、干净）
+    if command -v fdfind &> /dev/null; then
+        export FZF_DEFAULT_COMMAND='fdfind --type f'
+    fi
+
+    # 2. 启动 fzf，配置优雅的 UI：从下往上显示界面、边框、占用 50% 屏幕
+    local file
+    file=$(fzf --height 50% --layout=reverse --border --prompt="🔍 Search to Open > ")
+
+    # 3. 优雅地判断处理：只有在你选中了文件（没有按 Esc 取消）时才执行
+    if [ -n "$file" ]; then
+        # 4. 使用默认软件打开文件
+        # </dev/null &> /dev/null : 吞噬所有多余的输入输出，保持终端纯净
+        # & : 放入后台运行
+        xdg-open "$file" </dev/null &> /dev/null &
+
+        # 5. 彻底剥离进程与终端的关系，关掉终端文件依然保持打开
+        disown
+    fi
+}
 ############################ Path ##################################
