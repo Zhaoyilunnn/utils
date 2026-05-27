@@ -32,6 +32,39 @@ export MANPATH=$HOME/.local/texlive//2024/texmf-dist/doc/man:${MANPATH}
 export INFOPATH=$HOME/.local/texlive//2024/texmf-dist/doc/info:${INFOPATH}
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
+############################ Path ##################################
+
+
+############################ Tools ##################################
+test-proxy() {
+    # 1. 定义代理地址
+    local proxy_addr="socks5://127.0.0.1:10808"
+ 
+    # 2. 临时设置当前 Shell 的代理变量
+    export http_proxy="$proxy_addr"
+    export https_proxy="$proxy_addr"
+
+    echo "已在当前窗口设置代理: $proxy_addr"
+    echo "正在测试连通性，请稍候..."
+
+    # 3. 使用 curl 测试谷歌（设置 5 秒超时，仅输出状态码和关键连接信息）
+    # -w 可以定制输出格式，-o /dev/null 隐藏网页源码
+    local http_code=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 5 https://www.google.com)
+
+    # 4. 判断结果
+    if [ "$http_code" = "200" ]; then
+        echo -e "\033[32m[成功]\033[0m 成功连通 Google！响应状态码为: $http_code"
+    else
+        echo -e "\033[31m[失败]\033[0m 无法连通 Google，状态码或错误为: $http_code"
+        echo "请检查代理软件（如 v2ray/xray）是否在 10808 端口正常运行。"
+    fi
+
+    # 5. 测试结束后自动清理变量，防止污染后续的终端命令
+    unset http_proxy
+    unset https_proxy
+    echo "已清除当前窗口的临时代理变量。"
+}
+
 
 
 # sudo apt update
@@ -58,4 +91,4 @@ o() {
         disown
     fi
 }
-############################ Path ##################################
+############################ Tools ##################################
