@@ -32,6 +32,75 @@ need_cmd() {
   command -v "$1" >/dev/null 2>&1
 }
 
+version_ge() {
+  [ "$1" = "$2" ] || [ "$(printf '%s\n%s\n' "$2" "$1" | sort -V | head -n 1)" = "$2" ]
+}
+
+extract_version() {
+  grep -Eo '[0-9]+([.][0-9]+)+' | head -n 1 || true
+}
+
+installed_executable_at_least() {
+  local name="$1"
+  local path="$2"
+  local minimum_version="$3"
+  local installed_version
+
+  [ -x "$path" ] || return 1
+
+  installed_version="$("$path" --version 2>&1 | extract_version)"
+  [ -n "$installed_version" ] || return 1
+
+  if version_ge "$installed_version" "$minimum_version"; then
+    log "Skipping ${name}; installed version ${installed_version} at ${path} is >= ${minimum_version}"
+    return 0
+  fi
+
+  return 1
+}
+
+installed_command_at_least() {
+  local name="$1"
+  local command_name="$2"
+  local minimum_version="$3"
+  local path
+
+  path="$(command -v "$command_name" || true)"
+  [ -n "$path" ] || return 1
+
+  installed_executable_at_least "$name" "$path" "$minimum_version"
+}
+
+installed_lua_at_least() {
+  local lua_path luac_path installed_version
+
+  lua_path="$(command -v lua || true)"
+  luac_path="$(command -v luac || true)"
+  [ -n "$lua_path" ] && [ -n "$luac_path" ] || return 1
+
+  installed_version="$("$lua_path" -v 2>&1 | extract_version)"
+  [ -n "$installed_version" ] || return 1
+
+  if version_ge "$installed_version" "$LUA_VERSION"; then
+    log "Skipping Lua; installed version ${installed_version} at ${lua_path} is >= ${LUA_VERSION}"
+    return 0
+  fi
+
+  return 1
+}
+
+apt_package_installed() {
+  [ "$(dpkg-query -W -f='${Status}' "$1" 2>/dev/null || true)" = "install ok installed" ]
+}
+
+missing_apt_packages() {
+  local package_name
+
+  for package_name in "$@"; do
+    apt_package_installed "$package_name" || printf '%s\n' "$package_name"
+  done
+}
+
 run_as_root() {
   if [ "$(id -u)" -eq 0 ]; then
     "$@"
@@ -52,28 +121,40 @@ prepare_dirs() {
 }
 
 install_apt_base_deps() {
+  local packages missing
+
   if [ "$APT_INSTALL" != "1" ]; then
     log "Skipping apt dependencies because APT_INSTALL=$APT_INSTALL"
     return
   fi
 
+  packages=(
+    ca-certificates
+    curl
+    git
+    tar
+    gzip
+    xz-utils
+    unzip
+    build-essential
+    libreadline-dev
+    libncurses-dev
+    xclip
+    wl-clipboard
+  )
+
+  mapfile -t missing < <(missing_apt_packages "${packages[@]}")
+
+  if [ "${#missing[@]}" -eq 0 ]; then
+    log "System apt dependencies already installed"
+    return
+  fi
+
   need_cmd sudo || [ "$(id -u)" -eq 0 ] || fail "sudo is required when APT_INSTALL=1"
 
-  log "Installing minimal system dependencies"
+  log "Installing missing system dependencies: ${missing[*]}"
   run_as_root apt-get update
-  run_as_root apt-get install -y \
-    ca-certificates \
-    curl \
-    git \
-    tar \
-    gzip \
-    xz-utils \
-    unzip \
-    build-essential \
-    libreadline-dev \
-    libncurses-dev \
-    xclip \
-    wl-clipboard
+  run_as_root apt-get install -y "${missing[@]}"
 }
 
 download() {
@@ -150,6 +231,12 @@ install_neovim() {
   url="https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/${archive_name}"
   destination="$LOCAL_OPT/nvim-v${NVIM_VERSION}-linux-${arch}"
 
+  installed_command_at_least "Neovim" "nvim" "$NVIM_VERSION" && return
+  installed_executable_at_least "Neovim" "$destination/bin/nvim" "$NVIM_VERSION" && {
+    ln -sf "$destination/bin/nvim" "$LOCAL_BIN/nvim"
+    return
+  }
+
   log "Installing Neovim v${NVIM_VERSION} into ~/.local"
   download "$url" "$archive_path"
   extract_single_root_tarball "$archive_path" "$destination"
@@ -164,6 +251,12 @@ install_fd() {
   archive_path="/tmp/${archive_name}"
   url="https://github.com/sharkdp/fd/releases/download/v${FD_VERSION}/${archive_name}"
   destination="$LOCAL_OPT/fd-v${FD_VERSION}-${target}"
+
+  installed_command_at_least "fd" "fd" "$FD_VERSION" && return
+  installed_executable_at_least "fd" "$destination/fd" "$FD_VERSION" && {
+    ln -sf "$destination/fd" "$LOCAL_BIN/fd"
+    return
+  }
 
   log "Installing fd v${FD_VERSION} into ~/.local"
   download "$url" "$archive_path"
@@ -180,6 +273,12 @@ install_ripgrep() {
   url="https://github.com/BurntSushi/ripgrep/releases/download/${RG_VERSION}/${archive_name}"
   destination="$LOCAL_OPT/ripgrep-${RG_VERSION}-${target}"
 
+  installed_command_at_least "ripgrep" "rg" "$RG_VERSION" && return
+  installed_executable_at_least "ripgrep" "$destination/rg" "$RG_VERSION" && {
+    ln -sf "$destination/rg" "$LOCAL_BIN/rg"
+    return
+  }
+
   log "Installing ripgrep ${RG_VERSION} into ~/.local"
   download "$url" "$archive_path"
   extract_single_root_tarball "$archive_path" "$destination"
@@ -194,6 +293,13 @@ install_fzf() {
   archive_path="/tmp/${archive_name}"
   url="https://github.com/junegunn/fzf/releases/download/v${FZF_VERSION}/${archive_name}"
   destination="$LOCAL_OPT/fzf-${FZF_VERSION}-${target}"
+
+  installed_command_at_least "fzf" "fzf" "$FZF_VERSION" && return
+  installed_executable_at_least "fzf" "$destination/bin/fzf" "$FZF_VERSION" && {
+    ln -sf "$destination/bin/fzf" "$LOCAL_BIN/fzf"
+    return
+  }
+
   temp_dir="$(mktemp -d)"
 
   log "Installing fzf ${FZF_VERSION} into ~/.local"
@@ -214,6 +320,13 @@ install_tree_sitter() {
   archive_path="/tmp/${archive_name}"
   url="https://github.com/tree-sitter/tree-sitter/releases/download/v${TREE_SITTER_VERSION}/${archive_name}"
   destination="$LOCAL_OPT/tree-sitter-v${TREE_SITTER_VERSION}-${target}"
+
+  installed_command_at_least "tree-sitter" "tree-sitter" "$TREE_SITTER_VERSION" && return
+  installed_executable_at_least "tree-sitter" "$destination/bin/tree-sitter" "$TREE_SITTER_VERSION" && {
+    ln -sf "$destination/bin/tree-sitter" "$LOCAL_BIN/tree-sitter"
+    return
+  }
+
   temp_dir="$(mktemp -d)"
 
   log "Installing tree-sitter ${TREE_SITTER_VERSION} into ~/.local"
@@ -234,6 +347,8 @@ install_lua() {
   url="https://www.lua.org/ftp/${archive_name}"
   source_dir="$LOCAL_SRC/lua-${LUA_VERSION}"
 
+  installed_lua_at_least && return
+
   log "Building Lua ${LUA_VERSION} into ~/.local"
   download "$url" "$archive_path"
   rm -rf "$source_dir"
@@ -244,12 +359,16 @@ install_lua() {
 }
 
 install_luarocks() {
-  local archive_name archive_path url source_dir
+  local archive_name archive_path url source_dir lua_bin_dir lua_version lua_abi_version
 
   archive_name="luarocks-${LUAROCKS_VERSION}.tar.gz"
   archive_path="/tmp/${archive_name}"
   url="https://luarocks.org/releases/${archive_name}"
   source_dir="$LOCAL_SRC/luarocks-${LUAROCKS_VERSION}"
+  lua_bin_dir="$(dirname "$(command -v lua)")"
+  lua_version="$(lua -v 2>&1 | extract_version)"
+  lua_abi_version="$(printf '%s\n' "$lua_version" | cut -d. -f1,2)"
+  [ -n "$lua_abi_version" ] || fail "failed to detect Lua version for LuaRocks"
 
   log "Building LuaRocks ${LUAROCKS_VERSION} into ~/.local"
   download "$url" "$archive_path"
@@ -262,11 +381,8 @@ install_luarocks() {
       --prefix="$LOCAL_PREFIX" \
       --sysconfdir="$LOCAL_ETC/luarocks" \
       --rocks-tree="$LOCAL_PREFIX" \
-      --with-lua="$LOCAL_PREFIX" \
-      --with-lua-bin="$LOCAL_BIN" \
-      --with-lua-include="$LOCAL_PREFIX/include" \
-      --with-lua-lib="$LOCAL_PREFIX/lib" \
-      --lua-version=5.1
+      --with-lua-bin="$lua_bin_dir" \
+      --lua-version="$lua_abi_version"
     make
     make install
   )
@@ -313,7 +429,7 @@ main() {
 
 Done.
 
-System packages installed:
+System packages checked and installed only if missing:
   - ca-certificates
   - curl
   - git
@@ -322,14 +438,17 @@ System packages installed:
   - libreadline-dev / libncurses-dev
   - xclip / wl-clipboard
 
-Installed under ~/.local:
-  - Neovim v${NVIM_VERSION}
-  - fd v${FD_VERSION}
-  - ripgrep ${RG_VERSION}
-  - fzf ${FZF_VERSION}
-  - tree-sitter ${TREE_SITTER_VERSION}
-  - Lua ${LUA_VERSION}
+Required tool versions ensured:
+  - Neovim >= ${NVIM_VERSION}
+  - fd >= ${FD_VERSION}
+  - ripgrep >= ${RG_VERSION}
+  - fzf >= ${FZF_VERSION}
+  - tree-sitter >= ${TREE_SITTER_VERSION}
+  - Lua >= ${LUA_VERSION}
   - LuaRocks ${LUAROCKS_VERSION}
+
+Existing PATH tools are reused when their versions are sufficient.
+Missing or outdated tools are installed under ~/.local.
 
 Not touched:
   - ~/.config/nvim
