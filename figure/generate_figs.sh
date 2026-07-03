@@ -27,7 +27,8 @@ for fig_name in \
   dev_var_dist \
   fid_cu_size_impact \
   crosstalk \
-  crosstalk_real_machine; do
+  crosstalk_real_machine \
+  num_parts_cmp_qubit_cu; do
   bash pdf_crop.sh $i figs $fig_name
   i=$(expr $i + 1)
 done
