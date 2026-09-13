@@ -12,6 +12,7 @@ A comprehensive collection of development tools, scripts, and configurations for
   - Custom keymaps and autocmds
 - **Docker Environment**: Development container with customizable IP configuration
 - **Tools**:
+  - [`codex-usage`](dev/README.md#codex-historical-token-usage): Read historical per-session Codex token counters from the local database
   - `fetch_github_issue.py`: Download GitHub issues with comments for offline viewing
   - `fetch_github_copilot_models.sh`: Retrieve GitHub Copilot model information
 
