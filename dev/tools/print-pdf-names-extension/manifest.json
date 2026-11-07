@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Print PDF Names",
+  "version": "1.0.0",
+  "description": "Ctrl+P 打印网页时，临时设置带日期的页面标题，作为另存为 PDF 的建议名称。",
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "js": ["content.js"],
+    "run_at": "document_start"
+  }]
+}
