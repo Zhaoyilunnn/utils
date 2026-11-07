@@ -8,8 +8,9 @@ Install:
 3. Keep the current Windows session running. It starts automatically on future logins.
 
 Watches Desktop, Documents, Downloads, recursively. Files already present when the
-watcher starts are ignored. A new file is renamed after at least 6 seconds of
-stability and an exclusive file-open check. It polls every 3 seconds.
+watcher starts are ignored. A new file is renamed after at least 60 seconds of
+stability, no companion download marker, and a file-open check excluding writers.
+The handle stays open through the rename to avoid a check/rename race. It polls every 3 seconds.
 
 Example: A_B C D.pdf -> 2026-10-15-A-B-C-D.pdf
 
@@ -21,9 +22,19 @@ Cautions:
 - Files moved or copied into watched folders are also considered new files.
 - Very large folders may have noticeable scanning overhead.
 - Avoid editing/renaming a file simultaneously with this watcher.
-- This prototype is not yet tested on a real Windows machine.
+- Regression tests run with Windows PowerShell: .\Test-Watcher.ps1
+- Download completion is inferred from inactivity. A downloader that closes its
+  handle and pauses without a temporary marker for over 60 seconds may still be
+  processed early. Increase -StableSeconds when starting Watch-Files.ps1 if needed.
 
 To uninstall: run Uninstall.ps1 with PowerShell.
 Log: %LOCALAPPDATA%\CleanDownloadNames\watcher.log
 
 Version 0.2.1: Files already matching YYYY-MM-DD-hyphen-separated-name.ext are left unchanged (even if the date is in the past). Re-run Install.ps1 to update an existing installation.
+
+Version 0.2.2: Preserve dots consistently, prevent repeated date prefixes, record
+renamed destinations, repair repeated leading dates on newly processed files,
+wait 60 seconds by default, skip more download artifacts and companion markers,
+and retain the writer-excluding handle through rename with metadata revalidation.
+Existing files at watcher startup remain untouched, including previously affected
+files. Re-run Install.ps1 to update the running watcher.
