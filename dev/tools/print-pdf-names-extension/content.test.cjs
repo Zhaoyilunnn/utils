@@ -41,6 +41,13 @@ test('Unrelated shortcuts do not change title', () => {
     { key: 'p', ctrlKey: true, defaultPrevented: true }, { key: 'x', ctrlKey: true }]) p.emit('keydown', event);
   assert.equal(p.document.title, 'Original');
 });
+test('Keydown events without a string key are ignored', () => {
+  const p = page('Original');
+  for (const key of [undefined, null, 1]) {
+    assert.doesNotThrow(() => p.emit('keydown', { key, ctrlKey: true }));
+    assert.equal(p.document.title, 'Original');
+  }
+});
 test('Native beforeprint fallback, cancel/close restoration, no clobber of website update', () => {
   const p = page('Original');
   p.emit('beforeprint');

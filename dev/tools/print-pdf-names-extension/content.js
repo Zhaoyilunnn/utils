@@ -41,7 +41,7 @@
   // Set the title before the native shortcut starts print preview. Do not
   // preventDefault, replace window.print, or open another print dialog.
   window.addEventListener('keydown', (event) => {
-    if (event.key.toLowerCase() === 'p' && (event.ctrlKey || event.metaKey) &&
+    if (typeof event.key === 'string' && event.key.toLowerCase() === 'p' && (event.ctrlKey || event.metaKey) &&
         !event.altKey && !event.shiftKey && !event.defaultPrevented) prepare();
   }, true);
   // Fallback for native print entry points and repeated print preview events.
